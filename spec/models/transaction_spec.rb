@@ -56,14 +56,4 @@ RSpec.describe Transaction, type: :model do
     it {should validate_numericality_of(:credit_card_number)}
     it {should validate_presence_of(:result)}
   end
-  describe '#top_five_customers' do
-    it 'returns the top five customers' do
-   
-      expect(nomi.top_five_customers[0].id).to eq(timmy.id)
-      expect(nomi.top_five_customers[1].id).to eq(sue.id)
-      expect(nomi.top_five_customers[2].id).to eq(shooter.id)
-      expect(nomi.top_five_customers[3].id).to eq(louise.id)
-      expect(nomi.top_five_customers[4].id).to eq(alfred.id)
-    end
-  end
 end

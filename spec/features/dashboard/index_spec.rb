@@ -26,14 +26,15 @@ RSpec.describe 'merchant dashboard show page' do
   let!(:invoice_10) {Invoice.create!(status: 2, customer_id: alfred.id)}
   let!(:invoice_11) {Invoice.create!(status: 2, customer_id: olivia.id)}
   let!(:invoice_12) {Invoice.create!(status: 2, customer_id: olivia.id)}
+  let!(:invoice_13) {Invoice.create!(status: 2, customer_id: shooter.id)}
   
-  let!(:invoice_item_1)  {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_1.id, quantity: 2, unit_price: 11, status: "pending")}
-  let!(:invoice_item_2)  {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_3.id, quantity: 2, unit_price: 11, status: "pending")}
-  let!(:invoice_item_3)  {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_5.id, quantity: 2, unit_price: 11, status: "pending")}
-  let!(:invoice_item_4)  {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_7.id, quantity: 2, unit_price: 11, status: "pending")}
-  let!(:invoice_item_5)  {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_9.id, quantity: 2, unit_price: 11, status: "pending")}
-  let!(:invoice_item_6)  {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_11.id, quantity: 2, unit_price: 11, status: "pending")}
-  
+  let!(:invoice_item_1) {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_1.id, quantity: 2, unit_price: 11, status: "pending")}
+  let!(:invoice_item_2) {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_3.id, quantity: 2, unit_price: 11, status: "pending")}
+  let!(:invoice_item_3) {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_5.id, quantity: 2, unit_price: 11, status: "pending")}
+  let!(:invoice_item_4) {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_7.id, quantity: 2, unit_price: 11, status: "pending")}
+  let!(:invoice_item_5) {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_9.id, quantity: 2, unit_price: 11, status: "pending")}
+  let!(:invoice_item_6) {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_11.id, quantity: 2, unit_price: 11, status: "pending")}
+  let!(:invoice_item_7) {InvoiceItem.create!(item_id: item_2.id, invoice_id: invoice_13.id, quantity: 1, unit_price: 11, status: "pending")}
   
   let!(:transaction_1) {Transaction.create!(credit_card_number: 1111111111111111, credit_card_expiration_date: "11/11", result: "success", invoice_id: invoice_1.id)}
   let!(:transaction_2) {Transaction.create!(credit_card_number: 1111111111111111, credit_card_expiration_date: "11/11", result: "success", invoice_id: invoice_2.id)}
@@ -47,8 +48,8 @@ RSpec.describe 'merchant dashboard show page' do
   let!(:transaction_10) {Transaction.create!(credit_card_number: 1000000000000000, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_10.id)}
   let!(:transaction_11) {Transaction.create!(credit_card_number: 2000000000000000, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_11.id)}
   let!(:transaction_12) {Transaction.create!(credit_card_number: 2000000000000000, credit_card_expiration_date: "01/21", result: "failed", invoice_id: invoice_12.id)}
+  let!(:transaction_13) {Transaction.create!(credit_card_number: 3333333333333333, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_13.id)}
   
-
   describe 'visit merchant dashboard' do
     it 'shows the name of my merchant' do
       visit merchant_dashboard_index_path(nomi)
@@ -72,18 +73,22 @@ RSpec.describe 'merchant dashboard show page' do
       expect(page).to have_current_path("/merchants/#{nomi.id}/invoices")
     end
 
-    # describe 'I see the names of the top 5 customers' do
-    #   it 'shows each customer name and the number of successful transactions they have' do
-    #     visit merchant_dashboard_index_path(nomi)
+    describe 'I see the names of the top 5 customers' do
+      it 'shows each customer name and the number of successful transactions they have' do
+        visit merchant_dashboard_index_path(nomi)
 
-    #     expect(page).to have_content("Favorite Customers")
-    #     within ("#favorite_customers") do
-    #       expect(page).to have_content()
-    #       expect(page).to have_content()
-    #       expect(page).to have_content()
-    #     end
-    #   end
-    # end
-
+        expect(page).to have_content("Favorite Customers")
+        
+        within ("#favorite_customers") do
+       
+   
+          expect(page).to have_content("#{timmy.first_name} #{timmy.last_name} - 2 Purchases")
+          expect(page).to have_content("#{sue.first_name} #{sue.last_name} - 2 Purchases")
+          expect(page).to have_content("#{shooter.first_name} #{shooter.last_name} - 3 Purchases")
+          expect(page).to have_content("#{louise.first_name} #{louise.last_name} - 2 Purchases")
+          expect(page).to have_content("#{alfred.first_name} #{alfred.last_name} - 2 Purchases")
+        end
+      end
+    end
   end
 end

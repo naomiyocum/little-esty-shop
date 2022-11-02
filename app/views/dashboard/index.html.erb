@@ -7,7 +7,7 @@
   }
 </style>
 <header>
-    <h1><center> Little Esty Shop </center></h1>
+    
 </header>
 
 <nav class="topnav-right">
@@ -18,6 +18,10 @@
   <%= @merchant.name %>
   <div id="favorite_customers">
    <h3> Favorite Customers </h3>
+   <% @top_five.each do |five| %>
+    <p><%= "#{five.first_name} #{five.last_name} - #{five.transaction_count} Purchases" %></p>
+    
+   <% end %>
   </div>
 </body>
 </html>
