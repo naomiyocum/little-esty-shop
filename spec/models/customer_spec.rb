@@ -51,6 +51,7 @@ RSpec.describe Customer, type: :model do
   let!(:transaction_13) {Transaction.create!(credit_card_number: 3333333333333333, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_13.id)}
   describe 'relationships' do
     it {should have_many(:invoices)}
+    it {should have_many(:transactions).through(:invoices)}
   end
 
   describe '#transaction_count' do
