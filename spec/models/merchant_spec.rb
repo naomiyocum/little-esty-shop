@@ -77,6 +77,7 @@ RSpec.describe Merchant, type: :model do
       expect(nomi.customers.top_five_customers[2].id).to eq(sue.id)
       expect(nomi.customers.top_five_customers[3].id).to eq(louise.id)
       expect(nomi.customers.top_five_customers[4].id).to eq(alfred.id)
+      
     end
   end
 
