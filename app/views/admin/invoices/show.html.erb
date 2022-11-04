@@ -1,0 +1,9 @@
+<div><class = "adminInvoicesShow">
+<p><b> Invoices Show</b></p>
+
+<div id="information">
+  <p>Id: <%= @invoice.id %></p>
+  <p>Status: <%= @invoice.status %></p>
+  <p>Created: <%= @invoice.created_at.strftime("%A, %B %d, %Y")%></p>
+  <p>Name: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
+</div>
