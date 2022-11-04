@@ -24,7 +24,7 @@ class Item < ApplicationRecord
   def self.top_5_items
     select("items.*, sum(invoice_items.unit_price * invoice_items.quantity) AS revenue")
       .joins(invoices: :transactions)
-      .where('result = ?', 'success')
+      .where(transactions: {result: 'success'})
       .group('items.id')
       .order('revenue DESC')
       .limit(5)
