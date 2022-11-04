@@ -17,3 +17,7 @@
 <% end %>
 
 <h3> Top Merchants </h3>
+<% @merchants.top_five_merchant.each do |merchant| %>
+  <section id="top_merchant-<%= merchant.id %>">
+    <p><%= link_to "#{merchant.name}", "/admin/merchants/#{merchant.id}" %> Total Revenue: <%= merchant.revenue %><p>
+<% end %></section>
