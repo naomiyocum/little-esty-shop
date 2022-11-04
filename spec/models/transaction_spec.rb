@@ -60,11 +60,11 @@ RSpec.describe Transaction, type: :model do
   describe '#top_five_customers' do
     it 'returns the top five customers' do
    
-      expect(nomi.top_five_customers[0].id).to eq(timmy.id)
-      expect(nomi.top_five_customers[1].id).to eq(sue.id)
-      expect(nomi.top_five_customers[2].id).to eq(shooter.id)
-      expect(nomi.top_five_customers[3].id).to eq(louise.id)
-      expect(nomi.top_five_customers[4].id).to eq(alfred.id)
+      expect(nomi.customers.top_five_customers[0].id).to eq(timmy.id)
+      expect(nomi.customers.top_five_customers[1].id).to eq(sue.id)
+      expect(nomi.customers.top_five_customers[2].id).to eq(shooter.id)
+      expect(nomi.customers.top_five_customers[3].id).to eq(louise.id)
+      expect(nomi.customers.top_five_customers[4].id).to eq(alfred.id)
     end
   end
 end
