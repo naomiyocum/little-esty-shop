@@ -11,11 +11,9 @@ Rails.application.routes.draw do
   resources :admin, only: [:index]
 
   namespace :admin do
-    resources :merchants
+    resources :merchants, :invoices
+
   end
-  
-  get '/admin/invoices', to: 'admin/invoices#index'
-  get '/admin/invoices/:id', to: 'admin/invoices#show'
   
 
 end
