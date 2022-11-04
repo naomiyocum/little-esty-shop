@@ -8,6 +8,8 @@ class Invoice < ApplicationRecord
 
   enum status: ["in progress", "cancelled", "completed"]
 
-
+  def self.uniq_invoices
+    distinct
+  end
 end
 
