@@ -22,11 +22,6 @@ class Merchant < ApplicationRecord
                  .where('invoice_items.status = 1')
                  .order('invoices.created_at')
                  .limit(5)
-                      # .select('customers.id, customers.first_name, customers.last_name, count(transactions) as count')
-                      # .where('transactions.result =?','success')
-                      # .order('count desc')
-                      # .group('customers.id')
-                      # .limit(5)
   end
 end
 
