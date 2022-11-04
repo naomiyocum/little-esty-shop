@@ -3,40 +3,44 @@ require 'rails_helper'
 RSpec.describe Customer, type: :model do
   let!(:nomi) {Merchant.create!(name: "Naomi LLC")}
   let!(:tyty) {Merchant.create!(name: "TyTy's Grub")}
-  
-  let!(:timmy) {Customer.create!(first_name: "Timmy", last_name: "Limmy")}
-  let!(:sue) {Customer.create!(first_name: "Sue", last_name: "Maybis")}
-  let!(:shooter) {Customer.create!(first_name: "Shooter", last_name: "Mcgavin")}
-  let!(:louise) {Customer.create!(first_name: "Louise", last_name: "Banks")}
-  let!(:alfred) {Customer.create!(first_name: "Alfred", last_name: "Borden")}
-  let!(:olivia) {Customer.create!(first_name: "Olivia", last_name: "Wenscombe")}
-  
-  let!(:item_1) {nomi.items.create!(name: "book", description: "big book", unit_price: 11)}
-  let!(:item_2) {nomi.items.create!(name: "book", description: "bigber book", unit_price: 11)}
-  
-  let!(:invoice_1) {Invoice.create!(status: 2, customer_id: timmy.id)}
-  let!(:invoice_2) {Invoice.create!(status: 2, customer_id: timmy.id)}
-  let!(:invoice_3) {Invoice.create!(status: 2, customer_id: sue.id)}
-  let!(:invoice_4) {Invoice.create!(status: 2, customer_id: sue.id)}
-  let!(:invoice_5) {Invoice.create!(status: 2, customer_id: shooter.id)}
-  let!(:invoice_6) {Invoice.create!(status: 2, customer_id: shooter.id)}
-  let!(:invoice_7) {Invoice.create!(status: 2, customer_id: louise.id)}
-  let!(:invoice_8) {Invoice.create!(status: 2, customer_id: louise.id)}
-  let!(:invoice_9) {Invoice.create!(status: 2, customer_id: alfred.id)}
-  let!(:invoice_10) {Invoice.create!(status: 2, customer_id: alfred.id)}
-  let!(:invoice_11) {Invoice.create!(status: 2, customer_id: olivia.id)}
-  let!(:invoice_12) {Invoice.create!(status: 2, customer_id: olivia.id)}
-  let!(:invoice_13) {Invoice.create!(status: 2, customer_id: shooter.id)}
-  
-  let!(:invoice_item_1) {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_1.id, quantity: 2, unit_price: 11, status: "pending")}
-  let!(:invoice_item_2) {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_3.id, quantity: 2, unit_price: 11, status: "pending")}
-  let!(:invoice_item_3) {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_5.id, quantity: 2, unit_price: 11, status: "pending")}
-  let!(:invoice_item_4) {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_7.id, quantity: 2, unit_price: 11, status: "pending")}
-  let!(:invoice_item_5) {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_9.id, quantity: 2, unit_price: 11, status: "pending")}
-  let!(:invoice_item_6) {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_11.id, quantity: 2, unit_price: 11, status: "pending")}
-  let!(:invoice_item_7) {InvoiceItem.create!(item_id: item_2.id, invoice_id: invoice_13.id, quantity: 1, unit_price: 11, status: "pending")}
-  
-  let!(:transaction_1) {Transaction.create!(credit_card_number: 1111111111111111, credit_card_expiration_date: "11/11", result: "success", invoice_id: invoice_1.id)}
+   
+  let!(:luffy) {Customer.create!(first_name: "Monkey", last_name: "Luffy")}
+  let!(:nami) {Customer.create!(first_name: "Nami", last_name: "Waves")}
+  let!(:sanji) {Customer.create!(first_name: "Sanji", last_name: "Foot")}
+  let!(:zoro) {Customer.create!(first_name: "Zoro", last_name: "Sword")}
+  let!(:robin) {Customer.create!(first_name: "Robin", last_name: "Ikitai")}
+  let!(:chopper) {Customer.create!(first_name: "Doctor", last_name: "Chopper")}
+  let!(:jimbei) {Customer.create!(first_name: "Water", last_name: "Jimbei")}
+
+  let!(:invoice_1) {luffy.invoices.create!(status: 2)}
+  let!(:invoice_2) {luffy.invoices.create!(status: 2)}
+  let!(:invoice_3) {jimbei.invoices.create!(status: 2)}
+  let!(:invoice_4) {chopper.invoices.create!(status: 2)}
+  let!(:invoice_5) {nami.invoices.create!(status: 2)}
+  let!(:invoice_6) {nami.invoices.create!(status: 2)}
+  let!(:invoice_7) {sanji.invoices.create!(status: 2)}
+  let!(:invoice_8) {sanji.invoices.create!(status: 2)}
+  let!(:invoice_9) {sanji.invoices.create!(status: 2)}
+
+  let!(:invoice_item_1)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_1.id, quantity: 2, unit_price: 2999, status: "shipped")}
+  let!(:invoice_item_2)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_3.id, quantity: 1, unit_price: 2999, status: "shipped")}
+  let!(:invoice_item_3)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_5.id, quantity: 2, unit_price: 2999, status: "shipped")}
+  let!(:invoice_item_4)  {InvoiceItem.create!(item_id: stickers.id, invoice_id: invoice_7.id, quantity: 5, unit_price: 100, status: "shipped")}
+  let!(:invoice_item_5)  {InvoiceItem.create!(item_id: stickers.id, invoice_id: invoice_9.id, quantity: 1, unit_price: 100, status: "shipped")}
+  let!(:invoice_item_6)  {InvoiceItem.create!(item_id: orion.id, invoice_id: invoice_2.id, quantity: 1, unit_price: 1000, status: "shipped")}
+  let!(:invoice_item_7)  {InvoiceItem.create!(item_id: orion.id, invoice_id: invoice_8.id, quantity: 1, unit_price: 1000, status: "shipped")}
+  let!(:invoice_item_8)  {InvoiceItem.create!(item_id: oil.id, invoice_id: invoice_4.id, quantity: 10, unit_price: 2599, status: "shipped")}
+  let!(:invoice_item_9)  {InvoiceItem.create!(item_id: pants.id, invoice_id: invoice_2.id, quantity: 1, unit_price: 2100, status: "shipped")}
+
+  let!(:stickers) {nomi.items.create!(name: "Anime Stickers", description: "Random One Piece and Death Note stickers", unit_price: 599)}
+  let!(:lamp) {nomi.items.create!(name: "Lava Lamp", description: "Special blue/purple wax inside a glass vessel", unit_price: 2000)}
+  let!(:orion) {nomi.items.create!(name: "Orion Flag", description: "A flag of Okinawa's most popular beer", unit_price: 850)}
+  let!(:oil) {tyty.items.create!(name: "Special Chili Oil", description: "Random One Piece and Death Note stickers", unit_price: 800)}
+  let!(:water) {tyty.items.create!(name: "The Best Water Ever", description: "from the great Cherry Creek Reservoir", unit_price: 100)}
+  let!(:shirt) {tyty.items.create!(name: "Funny Shirt", description: "nice", unit_price: 1099)}
+  let!(:pants) {tyty.items.create!(name: "Pants", description: "nice", unit_price: 2010)}
+
+  let!(:transaction_1)  {Transaction.create!(credit_card_number: 1111111111111111, credit_card_expiration_date: "11/11", result: "success", invoice_id: invoice_1.id)}
   let!(:transaction_2) {Transaction.create!(credit_card_number: 1111111111111111, credit_card_expiration_date: "11/11", result: "success", invoice_id: invoice_2.id)}
   let!(:transaction_3) {Transaction.create!(credit_card_number: 2222222222222222, credit_card_expiration_date: "01/11", result: "success", invoice_id: invoice_3.id)}
   let!(:transaction_4) {Transaction.create!(credit_card_number: 2222222222222222, credit_card_expiration_date: "01/11", result: "success", invoice_id: invoice_4.id)}
@@ -45,28 +49,21 @@ RSpec.describe Customer, type: :model do
   let!(:transaction_7) {Transaction.create!(credit_card_number: 1555555555555555, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_7.id)}
   let!(:transaction_8) {Transaction.create!(credit_card_number: 1555555555555555, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_8.id)}
   let!(:transaction_9) {Transaction.create!(credit_card_number: 1000000000000000, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_9.id)}
-  let!(:transaction_10) {Transaction.create!(credit_card_number: 1000000000000000, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_10.id)}
-  let!(:transaction_11) {Transaction.create!(credit_card_number: 2000000000000000, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_11.id)}
-  let!(:transaction_12) {Transaction.create!(credit_card_number: 2000000000000000, credit_card_expiration_date: "01/21", result: "failed", invoice_id: invoice_12.id)}
-  let!(:transaction_13) {Transaction.create!(credit_card_number: 3333333333333333, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_13.id)}
+  
   describe 'relationships' do
     it {should have_many(:invoices)}
-    it {should have_many(:transactions).through(:invoices)}
-  end
-
-  describe '#transaction_count' do
-    it 'counts numbers of transactions' do
-    
-      expect(timmy.transaction_count).to eq(2)
-      expect(shooter.transaction_count).to eq(3)
-      expect(alfred.transaction_count).to eq(2)
-      expect(olivia.transaction_count).to eq(2)
-      expect(sue.transaction_count).to eq(2)
-    end
   end
 
   describe 'validations' do
     it {should validate_presence_of(:first_name)}
     it {should validate_presence_of(:last_name)}
+  end
+
+  describe 'class methods' do
+    describe '#top_five' do
+      it 'returns top 5 customers based on largest amount of successful transactions' do
+        expect(Customer.top_five_customers).to eq([sanji, luffy, nami, chopper, jimbei])
+      end
+    end
   end
 end
