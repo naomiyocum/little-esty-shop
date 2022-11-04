@@ -108,7 +108,7 @@ RSpec.describe Merchant, type: :model do
 
   describe '#top_five_merchant' do
     it "returns the name of top 5 merchants" do
-      expect(Merchant.top_five_merchant).to eq([nomi, shawn, tyty, kristen, yuji])
+      expect(Merchant.top_five_merchants).to eq([nomi, shawn, tyty, kristen, yuji])
     end
   end
 end

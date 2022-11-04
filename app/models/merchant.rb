@@ -15,7 +15,7 @@ class Merchant < ApplicationRecord
                  .limit(5)
   end
 
-  def self.top_five_merchant
+  def self.top_five_merchants
     self.joins(:transactions)
     .where("invoices.status = 2", "transactions.results = success")
     .select("merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) as revenue")
