@@ -69,17 +69,6 @@ RSpec.describe Merchant, type: :model do
     it {should validate_presence_of(:name)}
   end
 
-  describe '#top_five_customers' do
-    it 'returns the top five customers' do
-
-      expect(nomi.customers.top_five_customers[0].id).to eq(shooter.id)
-      expect(nomi.customers.top_five_customers[1].id).to eq(timmy.id)
-      expect(nomi.customers.top_five_customers[2].id).to eq(sue.id)
-      expect(nomi.customers.top_five_customers[3].id).to eq(louise.id)
-      expect(nomi.customers.top_five_customers[4].id).to eq(alfred.id)
-    end
-  end
-
   describe '#not_yet_shipped' do
     it 'returns the names of items of a particular merchant that have not been shipped' do
 
