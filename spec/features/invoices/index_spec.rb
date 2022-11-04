@@ -67,7 +67,7 @@ RSpec.describe "invoice index page", type: :feature do
     it 'should have a link to each invoices show page' do
       visit merchant_invoices_path(nomi)
 
-      click_on invoice_1.id
+      click_on invoice_1.id.to_s
       expect(current_path).to eq(merchant_invoice_path(nomi, invoice_1))
     end
   end
