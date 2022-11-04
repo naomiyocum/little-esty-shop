@@ -6,3 +6,14 @@
   <p>Customer:</p>
   <p><%= @invoice.customer.first_name%> <%= @invoice.customer.last_name%></p>
 </div>
+<section>
+  <div id="items_on_this_invoice">
+    <h3> Items on this Invoice: </h3>
+    <% @invoice.invoice_items.each do |invoice_item| %>
+      <%=invoice_item.item.name %>
+      <%=invoice_item.quantity %>
+      <%=invoice_item.item.current_price %>
+      <%=invoice_item.status %>
+    <% end %>
+  </div>
+</section>
