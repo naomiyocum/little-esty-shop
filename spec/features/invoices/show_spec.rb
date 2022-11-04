@@ -44,12 +44,13 @@ RSpec.describe 'Invoice Show Page', type: :feature do
   describe 'invoice#show' do
     it 'shows invoice id, status, and created at' do
       visit  merchant_invoice_path(nomi, invoice_1)
-      
+     
       expect(page).to have_content(invoice_1.id)
 
       within ("#info") do
         expect(page).to have_content("Status: #{invoice_1.status}")
         expect(page).to have_content("Created on: Thursday, November 03, 2022")
+        expect(page).to have_content("Total Revenue: $#{invoice_1.my_total_revenue(nomi)}")
         expect(page).to have_content("#{luffy.first_name} #{luffy.last_name}")
       end
     end

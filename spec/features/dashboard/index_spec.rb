@@ -89,7 +89,6 @@ RSpec.describe 'merchant dashboard show page' do
         within ("#favorite_customers") do
           expect(page).to have_content("#{timmy.first_name} #{timmy.last_name} - 2 Purchases")
           expect(page).to have_content("#{sue.first_name} #{sue.last_name} - 2 Purchases")
-          expect(page).to have_content("#{shooter.first_name} #{shooter.last_name} - 3 Purchases")
           expect(page).to have_content("#{louise.first_name} #{louise.last_name} - 2 Purchases")
           expect(page).to have_content("#{alfred.first_name} #{alfred.last_name} - 2 Purchases")
         end

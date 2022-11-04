@@ -1,8 +1,9 @@
 <h3 style="background-color:#E0E0E0; border-top: 2px solid black;"><center>Invoice #<%= @invoice.id %></center></h3>
 
 <div id="info">
-  <p>Status: <%= @invoice.status %></p>
-  <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p>
+  <p>Status: <%= @invoice.status %></p><br>
+  <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p><br>
+  <p>Total Revenue: $<%= @invoice.my_total_revenue(@merchant) %></p><br>
   <p>Customer:</p>
   <p><%= @invoice.customer.first_name%> <%= @invoice.customer.last_name%></p>
 </div>
