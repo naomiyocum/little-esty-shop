@@ -79,7 +79,7 @@ RSpec.describe 'merchant dashboard show page' do
       
       expect(page).to have_current_path("/merchants/#{nomi.id}/invoices")
     end
-
+    
     describe 'I see the names of the top 5 customers' do
       it 'shows each customer name and the number of successful transactions they have' do
         visit merchant_dashboard_index_path(nomi)
