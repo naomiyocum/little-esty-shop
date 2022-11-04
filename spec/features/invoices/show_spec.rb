@@ -43,7 +43,7 @@ RSpec.describe 'Invoice Show Page', type: :feature do
   describe 'invoice#show' do
     it 'shows invoice id, status, and created at' do
       visit  merchant_invoice_path(nomi, invoice_1)
-      save_and_open_page
+      
       expect(page).to have_content(invoice_1.id)
 
       within ("#info") do
