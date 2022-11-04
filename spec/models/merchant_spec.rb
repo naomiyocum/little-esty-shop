@@ -11,8 +11,16 @@ RSpec.describe Merchant, type: :model do
   let!(:alfred) {Customer.create!(first_name: "Alfred", last_name: "Borden")}
   let!(:olivia) {Customer.create!(first_name: "Olivia", last_name: "Wenscombe")}
   
-  let!(:item_1) {nomi.items.create!(name: "book", description: "big book", unit_price: 11)}
-  let!(:item_2) {nomi.items.create!(name: "book", description: "bigber book", unit_price: 11)}
+ 
+  let!(:item_1) {nomi.items.create!(name: "Book", description: "book", unit_price: 11)}
+  let!(:item_2) {nomi.items.create!(name: "Big Book", description: "bigger book", unit_price: 11)}
+  let!(:stickers) {nomi.items.create!(name: "Anime Stickers", description: "Random One Piece and Death Note stickers", unit_price: 599)}
+  let!(:lamp) {nomi.items.create!(name: "Lava Lamp", description: "Special blue/purple wax inside a glass vessel", unit_price: 2000)}
+  let!(:orion) {nomi.items.create!(name: "Orion Flag", description: "A flag of Okinawa's most popular beer", unit_price: 850)}
+  let!(:oil) {tyty.items.create!(name: "Special Chili Oil", description: "Random One Piece and Death Note stickers", unit_price: 800)}
+  let!(:water) {tyty.items.create!(name: "The Best Water Ever", description: "from the great Cherry Creek Reservoir", unit_price: 100)}
+  let!(:shirt) {tyty.items.create!(name: "Funny Shirt", description: "nice", unit_price: 1099)}
+  let!(:pants) {tyty.items.create!(name: "Pants", description: "nice", unit_price: 2010)}
   
   let!(:invoice_1) {Invoice.create!(status: 2, customer_id: timmy.id)}
   let!(:invoice_2) {Invoice.create!(status: 2, customer_id: timmy.id)}
@@ -26,13 +34,15 @@ RSpec.describe Merchant, type: :model do
   let!(:invoice_10) {Invoice.create!(status: 2, customer_id: alfred.id)}
   let!(:invoice_11) {Invoice.create!(status: 2, customer_id: olivia.id)}
   let!(:invoice_12) {Invoice.create!(status: 2, customer_id: olivia.id)}
-  
-  let!(:invoice_item_1)  {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_1.id, quantity: 2, unit_price: 11, status: "pending")}
-  let!(:invoice_item_2)  {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_3.id, quantity: 2, unit_price: 11, status: "pending")}
-  let!(:invoice_item_3)  {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_5.id, quantity: 2, unit_price: 11, status: "pending")}
-  let!(:invoice_item_4)  {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_7.id, quantity: 2, unit_price: 11, status: "pending")}
-  let!(:invoice_item_5)  {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_9.id, quantity: 2, unit_price: 11, status: "pending")}
-  let!(:invoice_item_6)  {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_11.id, quantity: 2, unit_price: 11, status: "pending")}
+  let!(:invoice_13) {Invoice.create!(status: 2, customer_id: shooter.id)}
+
+  let!(:invoice_item_1) {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_1.id, quantity: 2, unit_price: 11, status: "packaged")}
+  let!(:invoice_item_2) {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_3.id, quantity: 2, unit_price: 11, status: "packaged")}
+  let!(:invoice_item_3) {InvoiceItem.create!(item_id: orion.id, invoice_id: invoice_5.id, quantity: 2, unit_price: 11, status: "packaged")}
+  let!(:invoice_item_4) {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_7.id, quantity: 2, unit_price: 11, status: "packaged")}
+  let!(:invoice_item_5) {InvoiceItem.create!(item_id: stickers.id, invoice_id: invoice_9.id, quantity: 2, unit_price: 11, status: "packaged")}
+  let!(:invoice_item_6) {InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_11.id, quantity: 2, unit_price: 11, status: "pending")}
+  let!(:invoice_item_7) {InvoiceItem.create!(item_id: item_2.id, invoice_id: invoice_13.id, quantity: 1, unit_price: 11, status: "pending")}
   
   
   let!(:transaction_1) {Transaction.create!(credit_card_number: 1111111111111111, credit_card_expiration_date: "11/11", result: "success", invoice_id: invoice_1.id)}
@@ -60,12 +70,23 @@ RSpec.describe Merchant, type: :model do
 
   describe '#top_five_customers' do
     it 'returns the top five customers' do
- 
-      expect(nomi.top_five_customers[0].id).to eq(timmy.id)
-      expect(nomi.top_five_customers[1].id).to eq(sue.id)
-      expect(nomi.top_five_customers[2].id).to eq(shooter.id)
+
+      expect(nomi.top_five_customers[0].id).to eq(shooter.id)
+      expect(nomi.top_five_customers[1].id).to eq(timmy.id)
+      expect(nomi.top_five_customers[2].id).to eq(sue.id)
       expect(nomi.top_five_customers[3].id).to eq(louise.id)
       expect(nomi.top_five_customers[4].id).to eq(alfred.id)
+    end
+  end
+
+  describe '#not_yet_shipped' do
+    it 'returns the names of items of a particular merchant that have not been shipped' do
+
+      expect(nomi.not_yet_shipped[0].item.name).to eq("Book")
+      expect(nomi.not_yet_shipped[1].item.name).to eq("Lava Lamp")
+      expect(nomi.not_yet_shipped[2].item.name).to eq("Orion Flag")
+      expect(nomi.not_yet_shipped[3].item.name).to eq("Book") 
+      expect(nomi.not_yet_shipped[4].item.name).to eq("Anime Stickers")
     end
   end
 end

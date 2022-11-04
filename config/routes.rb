@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :merchants, only: [:index] do
     resources :dashboard, only: [:index]
-    resources :invoices, only: [:index]
+    resources :invoices, only: [:index, :show]
     resources :items, except: [:update]
   end
 

@@ -7,5 +7,4 @@ class Customer < ApplicationRecord
   def transaction_count
     self.transactions.count
   end
-
 end
