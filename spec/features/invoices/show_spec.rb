@@ -31,6 +31,7 @@ RSpec.describe 'Invoice Show Page', type: :feature do
   let!(:invoice_item_7)  {InvoiceItem.create!(item_id: orion.id, invoice_id: invoice_11.id, quantity: 1, unit_price: 1000, status: "shipped")}
   let!(:invoice_item_8)  {InvoiceItem.create!(item_id: oil.id, invoice_id: invoice_11.id, quantity: 10, unit_price: 2599, status: "shipped")}
   let!(:invoice_item_9)  {InvoiceItem.create!(item_id: pants.id, invoice_id: invoice_2.id, quantity: 1, unit_price: 2100, status: "shipped")}
+  
 
   let!(:stickers) {nomi.items.create!(name: "Anime Stickers", description: "Random One Piece and Death Note stickers", unit_price: 599)}
   let!(:lamp) {nomi.items.create!(name: "Lava Lamp", description: "Special blue/purple wax inside a glass vessel", unit_price: 2000)}
@@ -53,5 +54,19 @@ RSpec.describe 'Invoice Show Page', type: :feature do
         expect(page).to have_content("#{luffy.first_name} #{luffy.last_name}")
       end
     end
+
+      it 'I see all of my items on the invoice' do
+        visit  merchant_invoice_path(nomi, invoice_1)
+
+        expect(page).to have_content("Items on this Invoice:")
+        within ("#items_on_this_invoice") do
+          expect(page).to have_content("#{invoice_item_1.item.name}")
+          expect(page).to have_content("#{invoice_item_1.quantity}")
+          expect(page).to have_content("#{invoice_item_1.item.current_price}")
+          expect(page).to have_content("#{invoice_item_1.status}")
+          expect(page).to_not have_content("#{invoice_item_8.item.name}")
+          expect(page).to_not have_content("#{invoice_item_9.item.name}")
+        end
+      end
   end
 end
