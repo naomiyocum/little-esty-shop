@@ -9,7 +9,7 @@ RSpec.describe 'Invoice Show Page', type: :feature do
   let!(:sanji) {Customer.create!(first_name: "Sanji", last_name: "Foot")}
   let!(:zoro) {Customer.create!(first_name: "Zoro", last_name: "Sword")}
 
-  let!(:invoice_1) {luffy.invoices.create!(status: 2)}
+  let!(:invoice_1) {luffy.invoices.create!(status: 2, created_at: Time.parse("22.11.03"))}
   let!(:invoice_2) {luffy.invoices.create!(status: 2)}
   let!(:invoice_3) {luffy.invoices.create!(status: 2)}
   let!(:invoice_4) {nami.invoices.create!(status: 2)}
@@ -40,24 +40,17 @@ RSpec.describe 'Invoice Show Page', type: :feature do
   let!(:shirt) {tyty.items.create!(name: "Funny Shirt", description: "nice", unit_price: 1099)}
   let!(:pants) {tyty.items.create!(name: "Pants", description: "nice", unit_price: 2010)}
 
-  let!(:transaction_1)  {Transaction.create!(credit_card_number: 1111111111111111, credit_card_expiration_date: "11/11", result: "success", invoice_id: invoice_1.id)}
-  let!(:transaction_2) {Transaction.create!(credit_card_number: 1111111111111111, credit_card_expiration_date: "11/11", result: "success", invoice_id: invoice_2.id)}
-  let!(:transaction_3) {Transaction.create!(credit_card_number: 2222222222222222, credit_card_expiration_date: "01/11", result: "success", invoice_id: invoice_3.id)}
-  let!(:transaction_4) {Transaction.create!(credit_card_number: 2222222222222222, credit_card_expiration_date: "01/11", result: "success", invoice_id: invoice_4.id)}
-  let!(:transaction_5) {Transaction.create!(credit_card_number: 3333333333333333, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_5.id)}
-  let!(:transaction_6) {Transaction.create!(credit_card_number: 3333333333333333, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_6.id)}
-  let!(:transaction_7) {Transaction.create!(credit_card_number: 1555555555555555, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_7.id)}
-  let!(:transaction_8) {Transaction.create!(credit_card_number: 1555555555555555, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_8.id)}
-  let!(:transaction_9) {Transaction.create!(credit_card_number: 1000000000000000, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_9.id)}
-  let!(:transaction_10) {Transaction.create!(credit_card_number: 1000000000000000, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_10.id)}
-  let!(:transaction_11) {Transaction.create!(credit_card_number: 2000000000000000, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_11.id)}
-  let!(:transaction_12) {Transaction.create!(credit_card_number: 2000000000000000, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_12.id)}
-
   describe 'invoice#show' do
     it 'shows invoice id, status, and created at' do
+      visit  merchant_invoice_path(nomi, invoice_1)
       
+      expect(page).to have_content(invoice_1.id)
 
-
+      within ("#info") do
+        expect(page).to have_content("Status: #{invoice_1.status}")
+        expect(page).to have_content("Created on: Thursday, November 03, 2022")
+        expect(page).to have_content("#{luffy.first_name} #{luffy.last_name}")
+      end
     end
   end
 end
