@@ -15,7 +15,7 @@
     <h4>Top Customers</h4>
     <% Customer.top_five_customers.each do |customer| %>
     <ol>
-      <li><%= customer.first_name %> - <%= customer.transactions.count %> purchases</li>
+      <li><%= customer.first_name %> - <%= customer.transaction_count %> purchases</li>
     </ol>
     <% end %>
   </div>

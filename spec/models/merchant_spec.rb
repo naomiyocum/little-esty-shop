@@ -57,6 +57,7 @@ RSpec.describe Merchant, type: :model do
   let!(:transaction_10) {Transaction.create!(credit_card_number: 1000000000000000, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_10.id)}
   let!(:transaction_11) {Transaction.create!(credit_card_number: 2000000000000000, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_11.id)}
   let!(:transaction_12) {Transaction.create!(credit_card_number: 2000000000000000, credit_card_expiration_date: "01/21", result: "failed", invoice_id: invoice_12.id)}
+  
   describe 'relationships' do
     it {should have_many(:items)}
     it {should have_many(:invoice_items).through(:items)}
@@ -71,11 +72,11 @@ RSpec.describe Merchant, type: :model do
   describe '#top_five_customers' do
     it 'returns the top five customers' do
 
-      expect(nomi.top_five_customers[0].id).to eq(shooter.id)
-      expect(nomi.top_five_customers[1].id).to eq(timmy.id)
-      expect(nomi.top_five_customers[2].id).to eq(sue.id)
-      expect(nomi.top_five_customers[3].id).to eq(louise.id)
-      expect(nomi.top_five_customers[4].id).to eq(alfred.id)
+      expect(nomi.customers.top_five_customers[0].id).to eq(shooter.id)
+      expect(nomi.customers.top_five_customers[1].id).to eq(timmy.id)
+      expect(nomi.customers.top_five_customers[2].id).to eq(sue.id)
+      expect(nomi.customers.top_five_customers[3].id).to eq(louise.id)
+      expect(nomi.customers.top_five_customers[4].id).to eq(alfred.id)
     end
   end
 
