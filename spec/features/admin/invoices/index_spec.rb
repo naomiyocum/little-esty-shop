@@ -49,12 +49,12 @@ require 'rails_helper'
     end
 
     it "has invoice ID links" do 
-      expect(page).to have_link(@invoice_1.id)
-      expect(page).to have_link(@invoice_2.id)
-      expect(page).to have_link(@invoice_3.id)
-      expect(page).to have_link(@invoice_4.id)
-      expect(page).to have_link(@invoice_5.id)
-      click_link(@invoice_2.id)
+      expect(page).to have_link(@invoice_1.id.to_s)
+      expect(page).to have_link(@invoice_2.id.to_s)
+      expect(page).to have_link(@invoice_3.id.to_s)
+      expect(page).to have_link(@invoice_4.id.to_s)
+      expect(page).to have_link(@invoice_5.id.to_s)
+      click_link(@invoice_2.id.to_s)
       expect(current_path).to eq("/admin/invoices/#{@invoice_2.id}")
     end
   end 
