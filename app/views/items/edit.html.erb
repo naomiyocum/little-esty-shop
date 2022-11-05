@@ -1,3 +1,5 @@
+<%= render partial: 'layouts/merchants_header', locals: { merch_name: @merchant.name, merch_id: @merchant.id }%>
+
 <%= form_with url: "/merchants/#{@merchant.id}/items/#{@item.id}", method: :patch, local: true do |form| %>
   <%= form.label :name %>
   <%= form.text_field :name, value: @item.name %><br><br>
