@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     resources :items, except: [:update, :destroy]
   end
 
+  patch '/merchants/:merchant_id/invoices/:id', to: 'invoice_items#update'
+
   patch '/merchants/:merchant_id/items', to: 'items#update'
   patch '/merchants/:merchant_id/items/:id', to: 'items#update'
 
