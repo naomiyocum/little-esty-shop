@@ -22,7 +22,7 @@ RSpec.describe 'Invoice Show Page', type: :feature do
   let!(:invoice_11) {zoro.invoices.create!(status: 2)}
   let!(:invoice_12) {zoro.invoices.create!(status: 2)}
 
-  let!(:invoice_item_1)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_1.id, quantity: 2, unit_price: 2999, status: "shipped")}
+  let!(:invoice_item_1)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_1.id, quantity: 2, unit_price: 2999, status: "pending")}
   let!(:invoice_item_2)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_3.id, quantity: 1, unit_price: 2999, status: "shipped")}
   let!(:invoice_item_3)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_5.id, quantity: 2, unit_price: 2999, status: "shipped")}
   let!(:invoice_item_4)  {InvoiceItem.create!(item_id: stickers.id, invoice_id: invoice_7.id, quantity: 5, unit_price: 100, status: "shipped")}
@@ -55,18 +55,40 @@ RSpec.describe 'Invoice Show Page', type: :feature do
       end
     end
 
-      it 'I see all of my items on the invoice' do
-        visit  merchant_invoice_path(nomi, invoice_1)
+    it 'I see all of my items on the invoice' do
+      visit  merchant_invoice_path(nomi, invoice_1)
 
-        expect(page).to have_content("Items on this Invoice:")
-        within ("#items_on_this_invoice") do
-          expect(page).to have_content("#{invoice_item_1.item.name}")
-          expect(page).to have_content("#{invoice_item_1.quantity}")
-          expect(page).to have_content("#{invoice_item_1.item.current_price}")
-          expect(page).to have_content("#{invoice_item_1.status}")
-          expect(page).to_not have_content("#{invoice_item_8.item.name}")
-          expect(page).to_not have_content("#{invoice_item_9.item.name}")
-        end
+      expect(page).to have_content("Items on this Invoice:")
+      within ("#items_on_this_invoice") do
+        expect(page).to have_content("#{invoice_item_1.item.name}")
+        expect(page).to have_content("#{invoice_item_1.quantity}")
+        expect(page).to have_content("#{invoice_item_1.item.current_price}")
+        expect(page).to have_content("#{invoice_item_1.status}")
+        expect(page).to_not have_content("#{invoice_item_8.item.name}")
+        expect(page).to_not have_content("#{invoice_item_9.item.name}")
       end
+    end
+
+    it 'I see that each invoice item status is a select field with the current status selected' do
+      visit merchant_invoice_path(nomi, invoice_2)
+      
+      within ("#items_on_this_invoice") do
+        expect(page).to have_field(:status, with: "#{invoice_item_2.status}")
+      end
+    end
+
+    it 'after clicking update button, I am taken back to the merchant invoice show page and see the status updated' do
+      visit merchant_invoice_path(nomi, invoice_1)
+
+      within("#update_status") do
+        expect(invoice_item_1.status).to eq('pending')
+
+        select 'packaged', from: :status
+        click_button 'Update Item Status'
+      end
+
+      expect(current_path).to eq(merchant_invoice_path(nomi, invoice_1))
+      expect(invoice_item_1.reload.status).to eq('packaged')
+    end
   end
 end
