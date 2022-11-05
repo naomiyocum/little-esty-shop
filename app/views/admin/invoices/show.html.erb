@@ -2,8 +2,9 @@
 <p><b> Invoices Show</b></p>
 
 <div id="information">
+<%binding.pry%>
   <p>Id: <%= @invoice.id %></p>
   <p>Status: <%= @invoice.status %></p>
-  <p>Created: <%= @invoice.created_at.strftime("%A, %B %d, %Y")%></p>
-  <p>Name: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
+  <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y")%></p>
+  <p>Customer: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
 </div>
