@@ -1,10 +1,29 @@
 <div><class = "adminInvoicesShow">
-<p><b> Invoices Show</b></p>
+<h3 style="background-color:#E0E0E0; border-top: 2px solid black;"><center>Invoice #<%= @invoice.id %></center></h3>
 
-<div id="information">
-<%binding.pry%>
-  <p>Id: <%= @invoice.id %></p>
-  <p>Status: <%= @invoice.status %></p>
-  <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y")%></p>
-  <p>Customer: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
+<div id="info">
+  <p>Status: <%= @invoice.status %></p><br>
+  <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p><br>
+  <p>Total Revenue: $<%= @invoice.admin_total_revenue(@invoice) %></p><br>
+  <p>Customer:</p>
+  <p><%= @invoice.customer.first_name%> <%= @invoice.customer.last_name%></p>
 </div>
+<section>
+  <div id="items_on_this_invoice">
+    <h3> Items on this Invoice: </h3>
+    <% @invoice.invoice_items.uniq_invoice_items.each do |invoice_item| %>
+      <%=invoice_item.item.name %>
+      <%=invoice_item.quantity %>
+      <%=invoice_item.item.current_price %>
+
+      <div id="update_status">
+      <%= form_with url: "/admin/invoices/#{@invoice.id}?item_id=#{invoice_item.item.id}", method: :patch, local: true do |f| %>
+        <%= f.label :status %>
+        <%= f.select :status, ["pending", "packaged", "shipped"], :selected => invoice_item.status %>
+        <%= f.submit 'Update Item Status' %>
+      <% end %>
+      </div><br><br>
+
+    <% end %>
+  </div>
+</section>
