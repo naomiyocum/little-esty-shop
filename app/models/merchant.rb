@@ -8,13 +8,18 @@ class Merchant < ApplicationRecord
 
   validates_presence_of :name
 
-  def top_five_customers
-    self.customers.joins(invoices: :transactions)
-                      .select('customers.id, customers.first_name, customers.last_name, count(transactions) as count')
-                      .where('transactions.result =?','success')
-                      .order('count desc')
-                      .group('customers.id')
-                      .limit(5)
+  def not_yet_shipped
+    invoice_items.joins(:invoice)
+                 .where('invoice_items.status = 1')
+                 .order('invoices.created_at')
+                 .limit(5)
+  end
 
+  def self.top_five_merchants
+    self.joins(:transactions)
+    .where("invoices.status = 2", "transactions.results = success")
+    .select("merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) as revenue")
+    .group(:id)
+    .order("revenue desc").limit(5)
   end
 end

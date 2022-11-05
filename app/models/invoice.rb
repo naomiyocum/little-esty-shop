@@ -8,6 +8,15 @@ class Invoice < ApplicationRecord
 
   enum status: ["in progress", "cancelled", "completed"]
 
+  def self.uniq_invoices
+    distinct
+  end
 
+  def my_total_revenue(merchant)
+    invoice_items.joins(:item)
+      .where(invoice_items: {invoice_id: self.id})
+      .where(items: {merchant_id: merchant.id})
+      .sum('invoice_items.unit_price * invoice_items.quantity')
+  end
 end
 

@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   resources :merchants, only: [:index] do
     resources :dashboard, only: [:index]
-    resources :invoices, only: [:index]
-    resources :items, except: [:update]
+    resources :invoices, only: [:index, :show]
+    resources :items, except: [:update, :destroy]
   end
+
+  patch '/merchants/:merchant_id/invoices/:id', to: 'invoice_items#update'
 
   patch '/merchants/:merchant_id/items', to: 'items#update'
   patch '/merchants/:merchant_id/items/:id', to: 'items#update'
