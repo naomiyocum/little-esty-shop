@@ -10,7 +10,7 @@
     <div id="enabled" style="text-indent:40px;">
     <% @merchant.items.where(status: 'enabled').each do |item| %>
       <div id="item-<%= item.id %>">
-        <p><a href=<%= merchant_item_path(@merchant, item) %>><%= item.name %></a>
+        <p><%= link_to "#{item.name}", merchant_item_path(@merchant, item) %>
         <%= button_to 'Disable', "/merchants/#{@merchant.id}/items", :params => {disable: item.id}, method: :patch %></p>
       </div>
     <% end %>
@@ -20,7 +20,7 @@
     <div id="disabled" style="text-indent:40px;">
     <% @merchant.items.where(status: 'disabled').each do |item| %>
       <div id="item-<%= item.id %>">
-        <p><a href=<%= merchant_item_path(@merchant, item) %>><%= item.name %></a>
+        <p><%= link_to "#{item.name}", merchant_item_path(@merchant, item) %>
         <%= button_to 'Enable', "/merchants/#{@merchant.id}/items", :params => {enable: item.id}, method: :patch %></p>
       </div>
     <% end %>
@@ -31,8 +31,8 @@
     <h3>Top Items</h3>
         <ol>
         <% @merchant.items.top_5_items.each do |item| %>
-         <li><a href=<%= merchant_item_path(@merchant, item) %>>
-         <%= item.name %></a> - $<%= item.revenue / 100 %> in sales</li>
+         <li><%= link_to "#{item.name}", merchant_item_path(@merchant, item) %> 
+         - $<%= item.revenue / 100 %> in sales</li>
          <p>Top day for <%= item.name %> was <%= item.top_date %></p><br><br>
           <% end %> 
       </ol> 
