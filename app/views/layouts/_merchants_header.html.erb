@@ -1,0 +1,13 @@
+<style>
+    .topnav-right {
+    float: right;
+  }
+</style>
+
+<nav class="topnav-right">
+  <p><%= link_to "Dashboard", merchant_dashboard_index_path(merch_id) %>&nbsp;&nbsp;     
+  <%= link_to "My Items", merchant_items_path(merch_id) %>&nbsp;&nbsp;  
+  <%= link_to "My Invoices", merchant_invoices_path(merch_id) %></p>
+</nav>
+
+<h2><%= merch_name %></h2><br><br>
