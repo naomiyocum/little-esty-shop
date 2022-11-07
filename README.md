@@ -1,8 +1,18 @@
 # Little Esty Shop
+![GitHub language count](https://img.shields.io/github/languages/count/naomiyocum/little-esty-shop)
+![GitHub top language](https://img.shields.io/github/languages/top/naomiyocum/little-esty-shop?color=yellow)
+
+## Table of contents
+* [Description](#description)
+* [Learning Goals](#learning-goals)
+* [Requirements](#requirements)
+* [Phases](#phases)
+* [Schema Design](#schema-design)
+* [Contributors](#contributors)
 
 ## Background and Description
 
-"Little Esty Shop" is a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices.
+"Little Esty Shop" was a group project assigned to us during Week 4 of Mod 2 at Turing School of Software & Design. We were to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. Below are the learning goals and requirements of this group project, as well as the phases that include User Stories we completed.
 
 ## Learning Goals
 - Practice designing a normalized database schema and defining model relationships
@@ -20,21 +30,16 @@
 - Continuous Integration / Continuous Deployment is not allowed
 - Any gems added to the project must be approved by an instructor
 
-## Setup
-
-This project requires Ruby 2.7.4.
-
-* Fork this repository
-* Clone your fork
-* From the command line, install gems and set up your DB:
-    * `bundle`
-    * `rails db:create`
-* Run the test suite with `bundle exec rspec`.
-* Run your development server with `rails s` to see the app in action.
-
 ## Phases
 
 1. [Database Setup](./doc/db_setup.md)
 1. [User Stories](./doc/user_stories.md)
 1. [Extensions](./doc/extensions.md)
 1. [Evaluation](./doc/evaluation.md)
+
+## Schema Design
+Below is our database design with one-to-many and many-to-many relationships.
+
+![Screen Shot 2022-11-07 at 2 52 34 PM](https://user-images.githubusercontent.com/102825498/200424743-560cf9fb-af10-44b0-8a3e-eb21690be5ed.png)
+
+## Contributors
