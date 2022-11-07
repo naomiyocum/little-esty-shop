@@ -56,20 +56,6 @@ require 'rails_helper'
       end
     end
 
-    # it 'I see all of my items on the invoice' do
-    #   visit  admin_invoice_path(invoice_1)
-
-    #   expect(page).to have_content("Items on this Invoice:")
-    #   within ("#items_on_this_invoice") do
-    #     expect(page).to have_content("#{invoice_item_1.item.name}")
-    #     expect(page).to have_content("#{invoice_item_1.quantity}")
-    #     expect(page).to have_content("#{invoice_item_1.item.current_price}")
-    #     expect(page).to have_content("#{invoice_item_1.status}")
-    #     expect(page).to_not have_content("#{invoice_item_8.item.name}")
-    #     expect(page).to_not have_content("#{invoice_item_9.item.name}")
-    #   end
-    # end
-
     it 'I see that each invoice item status is a select field with the current status selected' do
       visit admin_invoice_path(invoice_2)
       
@@ -93,11 +79,3 @@ require 'rails_helper'
     end
   end
 end
-
-
-  # <div id="items_on_this_invoice">
-  #   <h3> Items on this Invoice: </h3>
-  #   <% @invoice.invoice_items.uniq_invoice_items.each do |invoice_item| %>
-  #     <%=invoice_item.item.name %>
-  #     <%=invoice_item.quantity %>
-  #     <%=invoice_item.item.current_price %>
