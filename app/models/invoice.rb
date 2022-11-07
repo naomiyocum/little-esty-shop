@@ -13,10 +13,11 @@ class Invoice < ApplicationRecord
   end
 
   def my_total_revenue(merchant)
-    invoice_items.joins(:item)
+    r = invoice_items.joins(:item)
       .where(invoice_items: {invoice_id: self.id})
       .where(items: {merchant_id: merchant.id})
       .sum('invoice_items.unit_price * invoice_items.quantity')
+    "%.2f" % r
   end
 end
 

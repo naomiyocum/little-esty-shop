@@ -2,9 +2,17 @@
 <html>
 <style>
 
-    .topnav-right {
-    float: right;
-  }
+.flex_container {
+    display: flex;
+}
+.flex_child {
+    flex: 1;
+    border: 2px
+}
+
+.flex_child:first-child {
+    margin-right: 20px;
+}
 </style>
 
 
@@ -13,23 +21,24 @@
   <p> <%= link_to "My Invoices", "/merchants/#{@merchant.id}/invoices" %> </p>
 </nav>
 
+
 <body>
   <%= @merchant.name %>
-  <div id="favorite_customers">
+<div class = "flex_container">
+  <div class="flex_child left">
+    <h3> Items Ready to Ship </h3>
+    <% @items_ready_to_ship.each do |invoice_item|%>
+       <p><%= invoice_item.item.name %> Invoice#<%= link_to invoice_item.invoice_id, "/merchants/#{@merchant.id}/invoices/#{invoice_item.invoice_id}"%> - <%= invoice_item.invoice.created_at.strftime('%A, %B %d,%Y')%></p>
+    <% end %>
+  </div>
+
+  <div class="flex_child right">
    <h3> Favorite Customers </h3>
    <% @top_five.each do |five| %>
     <p><%= "#{five.first_name} #{five.last_name} - #{five.transaction_count} Purchases" %></p>
    <% end %>
   </div>
-
-  <div id="items_ready_to_ship">
-    <h3> Items Ready to Ship </h3>
-    <% @items_ready_to_ship.each do |invoice_item|%>
-       <p><%= invoice_item.item.name %> Invoice#<%= link_to invoice_item.invoice_id, "/merchants/#{@merchant.id}/invoices/#{invoice_item.invoice_id}"%> - <%= invoice_item.invoice.created_at.strftime('%A, %B %d,%Y')%></p>
     
-    <% end %>
-    
-  </div>
-
+</div>
 </body>
 </html>
