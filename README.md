@@ -5,14 +5,16 @@
 ## Table of Contents
 * [Description](#description)
 * [Learning Goals](#learning-goals)
-* [Requirements](#requirements)
+* [Technologies](#technologies)
 * [Phases](#phases)
 * [Schema Design](#schema-design)
 * [Contributors](#contributors)
 
 ## Description
 
-"Little Esty Shop" was a group project assigned to us during Week 4 of Mod 2 at Turing School of Software & Design. We were to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. Below are the learning goals and requirements of this group project, as well as the phases that include User Stories we completed.
+"Little Esty Shop" was a group project assigned to us during Week 4 of Mod 2 at Turing School of Software & Design. We were to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. 
+
+Below are the learning goals and requirements of this group project, as well as the phases that include User Stories we completed.
 
 ## Learning Goals
 - Practice designing a normalized database schema and defining model relationships
@@ -20,15 +22,11 @@
 - Utilize advanced active record techniques to perform complex database queries
 - Practice consuming a public API while utilizing POROs as a way to apply OOP principles to organize code
 
-## Requirements
-- must use Rails 5.2.x
-- must use PostgreSQL
-- all code must be tested via feature tests and model tests, respectively
-- must use GitHub branching, team code reviews via GitHub comments, and github projects to track progress on user stories
-- must include a thorough README to describe the project
-- must deploy completed code to Heroku
-- Continuous Integration / Continuous Deployment is not allowed
-- Any gems added to the project must be approved by an instructor
+## Technologies
+Project is created with:
+* Rails 5.2.6
+* Ruby 2.7.4
+* PostgreSQL
 
 ## Phases
 
