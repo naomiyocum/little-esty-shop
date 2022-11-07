@@ -54,9 +54,9 @@ require 'rails_helper'
       expect(page).to have_link(@invoice_3.id.to_s)
       expect(page).to have_link(@invoice_4.id.to_s)
       expect(page).to have_link(@invoice_5.id.to_s)
-      click_link(@invoice_2.id.to_s)
-      save_and_open_page
       
+      click_link(@invoice_2.id.to_s)
+
       expect(current_path).to eq("/admin/invoices/#{@invoice_2.id}")
     end
   end 
