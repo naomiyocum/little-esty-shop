@@ -1,8 +1,8 @@
 <h1> Admin Invoices Index </h1>
 
 <div><class = "adminInvoicesIndex">
-<p> Invoices Index</p>
-  <%@invoices.each do |invoice|%>
-    <p>Invoice #<a href=<%= admin_invoice_path(invoice)%>><%=invoice.id%></a></p>
-  <%end%>
+  <p> Invoices Index</p>
+    <%@invoices.each do |invoice|%>
+      <p>Invoice #<%=link_to invoice.id, admin_invoice_path(invoice)%></p>
+    <%end%>
 </div>
