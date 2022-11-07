@@ -11,14 +11,11 @@ RSpec.describe 'item edit page', type: :feature do
     it 'redirects me back to show page where I see a flash message that the update was done successfully' do
       visit edit_merchant_item_path(nomi, lamp)
 
-      fill_in :unit_price, with:  2533
-
+      fill_in "Unit price", with: "2533"
       click_button 'Update Item'
 
       expect(current_path).to eq(merchant_item_path(nomi, lamp))
-
       expect(page).to have_content("$25.33")
-
       expect(page).to have_content("Successfully Updated #{lamp.name}")
     end
   end

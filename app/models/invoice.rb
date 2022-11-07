@@ -13,18 +13,21 @@ class Invoice < ApplicationRecord
   end
 
   def my_total_revenue(merchant)
-    r = invoice_items.joins(:item)
-      .where(invoice_items: {invoice_id: self.id})
-      .where(items: {merchant_id: merchant.id})
-      .sum('invoice_items.unit_price * invoice_items.quantity')
-    "%.2f" % r
-    end
-    
-    def admin_total_revenue(invoice_name)
-      invoice_items.joins(:invoice)
-      .where(invoice_items: {invoice_id: self.id})
-      .where(invoices: {id: invoice_name.id})
-      .sum('invoice_items.unit_price * invoice_items.quantity')
+    invoice_items.joins(:item)
+                  .where(invoice_items: {invoice_id: self.id})
+                  .where(items: {merchant_id: merchant.id})
+                  .sum('invoice_items.unit_price * invoice_items.quantity')
+  end
+
+  def my_total_revenue_formatter(merchant)
+    "%.2f" % my_total_revenue(merchant)
+  end
+   
+  def admin_total_revenue(invoice_name)
+    invoice_items.joins(:invoice)
+    .where(invoice_items: {invoice_id: self.id})
+    .where(invoices: {id: invoice_name.id})
+    .sum('invoice_items.unit_price * invoice_items.quantity')
   end
 end
 
