@@ -1,14 +1,10 @@
 <%= render partial: 'layouts/merchants_header', locals: { merch_name: @merchant.name, merch_id: @merchant.id }%>
 
-<%= form_with url: merchant_items_path(@merchant), method: :post, local: true do |form| %>
-  <%= form.label :name %>
-  <%= form.text_field :name %><br><br>
-
-  <%= form.label :description %>
-  <%= form.text_area :description, :rows => 5 %><br><br>
-
-  <%= form.label :unit_price %>
-  <%= form.text_field :unit_price %>
-
-  <%= form.submit 'Create Item' %>
-<% end %>
+<%= render partial: 'form', locals: {
+  path: merchant_items_path(@merchant),
+  method: :post,
+  fill_in_name: nil,
+  fill_in_description: nil,
+  fill_in_unit_price: nil,
+  button_text: 'Create Item'
+} %>
