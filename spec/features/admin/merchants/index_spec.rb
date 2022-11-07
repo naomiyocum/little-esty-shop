@@ -150,4 +150,9 @@ end
       expect(current_path).to eq("/admin/merchants/#{nomi.id}")
     end
   end
+
+    it "Date with most revenue for each merchant" do
+      visit "/admin/merchants"
+      expect(page).to have_content("Top day for #{shawn.name} was #{shawn.merch_best_day}")
+    end
 end

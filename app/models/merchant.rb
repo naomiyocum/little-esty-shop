@@ -22,4 +22,12 @@ class Merchant < ApplicationRecord
     .group(:id)
     .order("revenue desc").limit(5)
   end
+
+  def merch_best_day
+    invoices.select('invoices.created_at, sum(invoice_items.quantity * invoice_items.unit_price) as revenue')
+    .group('invoices.created_at')
+    .order('revenue desc')
+    .first
+    .created_at.strftime('%m/%d/%Y')
+  end
 end

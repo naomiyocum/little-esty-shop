@@ -100,4 +100,10 @@ RSpec.describe Merchant, type: :model do
       expect(Merchant.top_five_merchants).to eq([nomi, shawn, tyty, kristen, yuji])
     end
   end
+
+  describe 'merch_best_day' do
+    it "returns merch's best day" do
+      expect(shawn.merch_best_day).to eq(shawn.created_at.strftime('%m/%d/%Y'))
+    end
+  end
 end
