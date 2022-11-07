@@ -14,4 +14,6 @@ class InvoiceItem < ApplicationRecord
    def self.uniq_invoice_items
     distinct
   end
+
+  
 end
