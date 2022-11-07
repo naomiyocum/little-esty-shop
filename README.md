@@ -12,9 +12,9 @@
 
 ## Description
 
-"Little Esty Shop" was a group project assigned to us during Week 4 of Mod 2 at Turing School of Software & Design. We were to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. 
+"Little Esty Shop" was a group project assigned to us during Week 4 of Mod 2 at Turing School of Software & Design. We were to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. Using RSpec and SimpleCov, we wrote model and feature tests that covers data logic and user behavior at 100%.
 
-Below are the learning goals and requirements of this group project, as well as the phases that include User Stories we completed.
+Below are the learning goals and phases that include User Stories we completed.
 
 ## Learning Goals
 - Practice designing a normalized database schema and defining model relationships
