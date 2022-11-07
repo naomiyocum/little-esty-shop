@@ -11,15 +11,17 @@ RSpec.describe "admin merchant edit page" do
   end
 
   it "shows a form with existing merchant attributes" do
-    expect(page).to have_field("name", with: @merchant_1.name)
-    expect(page).to_not have_field("name", with: @merchant_2.name)
+    
+    expect(page).to have_field("Name", with: @merchant_1.name)
+    expect(page).to_not have_field("Name", with: @merchant_2.name)
   end
 
-  it "redirects back to merchants amdin show page with updated info" do
-    fill_in "name", with: "Nomi LLC"
+  it "redirects back to merchants admin show page with updated info" do
+    fill_in "Name", with: "Nomi LLC"
     click_button "Submit"
     expect(current_path).to eq("/admin/merchants/#{@merchant_1.id}")
     expect(page).to have_content("Successfully Updated: Nomi LLC")
     expect(page).to have_content("Nomi LLC")
+    expect(page).to_not have_field("Name", with: @merchant_2.name)
   end
 end
