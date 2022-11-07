@@ -46,5 +46,3 @@ Below is our database design with one-to-many and many-to-many relationships.
 <a href="https://github.com/naomiyocum/little-esty-shop/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=naomiyocum/little-esty-shop" />
 </a>
-
-Made with [contrib.rocks](https://contrib.rocks).
