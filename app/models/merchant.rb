@@ -17,17 +17,17 @@ class Merchant < ApplicationRecord
 
   def self.top_five_merchants
     self.joins(:transactions)
-    .where("invoices.status = 2", "transactions.results = success")
-    .select("merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) as revenue")
-    .group(:id)
-    .order("revenue desc").limit(5)
+        .where("invoices.status = 2", "transactions.results = success")
+        .select("merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) as revenue")
+        .group(:id)
+        .order("revenue desc").limit(5)
   end
 
   def merch_best_day
     invoices.select('invoices.created_at, sum(invoice_items.quantity * invoice_items.unit_price) as revenue')
-    .group('invoices.created_at')
-    .order('revenue desc')
-    .first
-    .created_at.strftime('%m/%d/%Y')
+            .group('invoices.created_at')
+            .order('revenue desc')
+            .first
+            .created_at.strftime('%m/%d/%Y')
   end
 end
