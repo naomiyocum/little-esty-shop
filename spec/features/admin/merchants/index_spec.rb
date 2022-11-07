@@ -150,4 +150,8 @@ end
       expect(current_path).to eq("/admin/merchants/#{nomi.id}")
     end
   end
+
+    it "Date with most revenue for each merchant" do
+
+    end
 end
