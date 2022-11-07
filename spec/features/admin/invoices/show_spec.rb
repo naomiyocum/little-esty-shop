@@ -66,7 +66,7 @@ require 'rails_helper'
 
     it 'after clicking update button, I am taken back to the invoice show page and see the status updated' do
       visit admin_invoice_path(invoice_1)
-# save_and_open_page
+
       within("#update_status") do
         expect(invoice_item_1.status).to eq('pending')
 
