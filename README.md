@@ -10,7 +10,7 @@
 * [Schema Design](#schema-design)
 * [Contributors](#contributors)
 
-## Background and Description
+## Description
 
 "Little Esty Shop" was a group project assigned to us during Week 4 of Mod 2 at Turing School of Software & Design. We were to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices. Below are the learning goals and requirements of this group project, as well as the phases that include User Stories we completed.
 
@@ -43,3 +43,8 @@ Below is our database design with one-to-many and many-to-many relationships.
 ![Screen Shot 2022-11-07 at 2 52 34 PM](https://user-images.githubusercontent.com/102825498/200424743-560cf9fb-af10-44b0-8a3e-eb21690be5ed.png)
 
 ## Contributors
+<a href="https://github.com/naomiyocum/little-esty-shop/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=naomiyocum/little-esty-shop" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).
