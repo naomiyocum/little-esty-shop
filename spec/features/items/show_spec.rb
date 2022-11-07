@@ -12,7 +12,7 @@ RSpec.describe 'item show page', type: :feature do
       visit merchant_item_path(nomi, lamp)
 
       expect(page).to have_content(lamp.name)
-save_and_open_page
+
       within ("#information") do
         expect(page).to have_content("Description: #{lamp.description}")
         expect(page).to have_content("Current Price: $#{lamp.current_price}")

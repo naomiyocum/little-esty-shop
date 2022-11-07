@@ -13,9 +13,9 @@
   <div id="items_on_this_invoice">
     <h3> Items on this Invoice: </h3>
     <% @invoice.invoice_items.uniq_invoice_items.each do |invoice_item| %>
-      <p>Name:<%=invoice_item.item.name %></p>
-      <p>Quantity:<%=invoice_item.quantity %></p>
-      <p>current_price:$<%=invoice_item.item.current_price %></p>
+      <p>Name: <%=invoice_item.item.name %></p>
+      <p>Quantity: <%=invoice_item.quantity %></p>
+      <p>Current price: $<%=invoice_item.item.current_price %></p>
 
       <div id="update_status">
       <%= form_with url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}?item_id=#{invoice_item.item.id}", method: :patch, local: true do |f| %>
