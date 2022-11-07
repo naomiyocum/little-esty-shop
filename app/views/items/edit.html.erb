@@ -1,4 +1,7 @@
-<%= render partial: 'layouts/merchants_header', locals: { merch_name: @merchant.name, merch_id: @merchant.id }%>
+<%= render partial: 'layouts/merchants_header', locals: { 
+  merch_name: @merchant.name,
+  merch_id: @merchant.id 
+} %>
 
 <%= render partial: 'form', locals: {
   path: "/merchants/#{@merchant.id}/items/#{@item.id}",
