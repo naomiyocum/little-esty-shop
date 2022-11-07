@@ -56,7 +56,7 @@ RSpec.describe Invoice, type: :model do
   describe 'instance methods' do
     describe '#merchant_total_revenue' do
       it 'returns the total revenue for a specific merchant' do
-        expect(invoice_1.my_total_revenue(nomi)).to eq(5998)
+        expect(invoice_1.my_total_revenue(nomi)).to eq("5998.00")
       end
     end
   end

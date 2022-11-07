@@ -10,7 +10,7 @@ class Item < ApplicationRecord
   enum status: [:enabled, :disabled]
 
   def current_price
-    unit_price / 100.0
+    "%.2f" % (unit_price / 100.0)
   end
 
   def top_date
