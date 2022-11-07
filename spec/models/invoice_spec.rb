@@ -59,5 +59,11 @@ RSpec.describe Invoice, type: :model do
         expect(invoice_1.my_total_revenue(nomi)).to eq("5998.00")
       end
     end
+
+    describe '#admin_total_revenue' do
+      it 'returns the total revenue for a specific merchant' do
+        expect(invoice_1.admin_total_revenue(invoice_1)).to eq(5998)
+      end
+    end
   end
 end
