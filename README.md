@@ -2,7 +2,7 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/naomiyocum/little-esty-shop)
 ![GitHub top language](https://img.shields.io/github/languages/top/naomiyocum/little-esty-shop?color=yellow)
 
-## Table of contents
+## Table of Contents
 * [Description](#description)
 * [Learning Goals](#learning-goals)
 * [Requirements](#requirements)
