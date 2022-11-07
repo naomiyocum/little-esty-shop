@@ -1,9 +1,28 @@
 <div><class = "adminInvoicesShow">
-<p><b> Invoices Show</b></p>
+<h3 style="background-color:#E0E0E0; border-top: 2px solid black;"><center>Invoice #<%= @invoice.id %></center></h3>
 
-<div id="information">
-  <p>Id: <%= @invoice.id %></p>
-  <p>Status: <%= @invoice.status %></p>
-  <p>Created: <%= @invoice.created_at.strftime("%A, %B %d, %Y")%></p>
-  <p>Name: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
-</div>
+<div id="info">
+  <b>Invoice Status: </b><%= @invoice.status %><br><br>
+  <b>Created on: </b><%= @invoice.created_at.strftime("%A, %B %d, %Y") %><br><br>
+  <b>Total Revenue: </b>$<%= @invoice.admin_total_revenue(@invoice) %><br><br>
+  <b>Customer: </b><%= @invoice.customer.first_name%> <%= @invoice.customer.last_name%><br>
+</div><br>
+<section>
+  <div id="items_on_this_invoice">
+    <b> Items on this Invoice: </b><br>
+    <% @invoice.invoice_items.uniq_invoice_items.each do |invoice_item| %>
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <b>Item: </b><%=invoice_item.item.name %><br>
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <b>Quantity: </b><%=invoice_item.quantity %><br>
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <b>Current Price: </b><%=invoice_item.item.current_price %><br>
+
+      <div id="update_status">
+      <%= form_with url: "/admin/invoices/#{@invoice.id}?item_id=#{invoice_item.item.id}", method: :patch, local: true do |f| %>
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <b><%= f.label :item_status, 'Item Status:' %></b>
+        <%= f.select :status, ["pending", "packaged", "shipped"], :selected => invoice_item.status %>
+        <%= f.submit 'Update Item Status' %>
+      <% end %>
+      </div><br><br>
+
+    <% end %>
+  </div>
+</section>

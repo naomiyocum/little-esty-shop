@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-<style>
 
 .flex_container {
     display: flex;
@@ -20,10 +19,7 @@
 </style>
 
 
-<nav class="topnav-right">
-  <p> <%= link_to "My Items", "/merchants/#{@merchant.id}/items" %> </p>
-  <p> <%= link_to "My Invoices", "/merchants/#{@merchant.id}/invoices" %> </p>
-</nav>
+<%= render partial: 'layouts/merchants_header', locals: { merch_name: @merchant.name, merch_id: @merchant.id }%>
 
 
 <body>
@@ -37,6 +33,7 @@
   </div>
 
   <div class="flex_child right">
+  <div id="favorite_customers">
    <h3> Favorite Customers </h3>
    <% @top_five.each do |five| %>
     <p><%= "#{five.first_name} #{five.last_name} - #{five.transaction_count} Purchases" %></p>
