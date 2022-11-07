@@ -20,4 +20,5 @@
 <% @merchants.top_five_merchants.each do |merchant| %>
   <section id="top_merchant-<%= merchant.id %>">
     <p><%= link_to "#{merchant.name}", "/admin/merchants/#{merchant.id}" %> Total Revenue: <%= merchant.revenue %><p>
+      <p> <%= "Top day for #{merchant.name} was #{merchant.merch_best_day}" %></p>
 <% end %></section>
