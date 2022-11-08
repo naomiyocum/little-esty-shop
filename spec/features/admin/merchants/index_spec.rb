@@ -13,7 +13,7 @@ RSpec.describe "admin merchant index page" do
   it "shows Admin Dashboard" do
     expect(page).to have_content("Admin Dashboard")
   end
-  
+
   it "shows name of each merchant" do
     expect(page).to have_content(@merchant_1.name)
     expect(page).to have_content(@merchant_2.name)
