@@ -1,3 +1,14 @@
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 1em;
+}
+th {
+  background-color: #BFBFBF;
+}
+</style>
+
 <%= render partial: 'layouts/merchants_header', locals: { merch_name: @merchant.name, merch_id: @merchant.id }%>
 
 <h3 style="background-color:#E0E0E0; border-top: 2px solid black;"><center>Invoice #<%= @invoice.id %></center></h3>
@@ -7,25 +18,33 @@
   <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p><br>
   <p>Total Revenue: $<%= @invoice.my_total_revenue_formatter(@merchant) %></p><br>
   <p>Customer:</p>
-  <p><%= @invoice.customer.first_name%> <%= @invoice.customer.last_name%></p>
-</div>
+  <p style="text-indent:30px;"><%= @invoice.customer.first_name%> <%= @invoice.customer.last_name%></p>
+</div><br><br>
+
 <section>
   <div id="items_on_this_invoice">
     <h3> Items on this Invoice: </h3>
-    <% @invoice.invoice_items.uniq_invoice_items.each do |invoice_item| %>
-      <p>Name: <%=invoice_item.item.name %></p>
-      <p>Quantity: <%=invoice_item.quantity %></p>
-      <p>Current price: $<%=invoice_item.item.current_price %></p>
-
-      <div id="update_status">
-      <%= form_with url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}?item_id=#{invoice_item.item.id}", method: :patch, local: true do |f| %>
-        <%= f.label :status %>
-        <%= f.select :status, ["pending", "packaged", "shipped"], :selected => invoice_item.status %>
-        <%= f.submit 'Update Item Status' %>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Current Price</th>
+        <th>Status</th>
+      </tr>
+      <% @invoice.invoice_items.uniq_invoice_items.each do |invoice_item| %>
+      <tr>
+        <td><%= invoice_item.item.name %></td>
+        <td><%= invoice_item.quantity %></td>
+        <td>$<%= invoice_item.item.current_price %></td>
+        <td id="update_status">
+          <%= form_with url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}?item_id=#{invoice_item.item.id}", method: :patch, local: true do |f| %>
+          <%= f.select :status, ["pending", "packaged", "shipped"], :selected => invoice_item.status %>
+          <%= f.submit 'Update Item Status' %>
+          <% end %>
+        </td>
+      </tr>
       <% end %>
-      </div><br><br>
-
-    <% end %>
+    </table>
   </div>
 </section>
 
