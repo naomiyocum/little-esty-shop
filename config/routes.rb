@@ -12,10 +12,10 @@ Rails.application.routes.draw do
 
   resources :admin, only: [:index]
 
-  namespace :admin do
-    resources :merchants, :invoices
-
+  namespace :admin, except: [:destroy, :update] do
+    resources :merchants, :invoices, except: [:destroy, :update]
   end
-  
 
+  patch '/admin/invoices/:id', to: 'admin/invoices#update'
+  patch '/admin/merchants/:id', to: 'admin/merchants#update'
 end
