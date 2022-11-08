@@ -7,11 +7,21 @@ table, th, td {
 th {
   background-color: #BFBFBF;
 }
+td {
+  background-color: #ECECEC;
+}
+#invoice {
+  background-color:#E0E0E0;
+  border-top: 2px solid black;
+}
+#submit-button {
+  background-color: #FFFFFF;
+}
 </style>
 
 <%= render partial: 'layouts/merchants_header', locals: { merch_name: @merchant.name, merch_id: @merchant.id }%>
 
-<h3 style="background-color:#E0E0E0; border-top: 2px solid black;"><center>Invoice #<%= @invoice.id %></center></h3>
+<h3 id="invoice"><center>Invoice #<%= @invoice.id %></center></h3>
 
 <div id="info">
   <p>Status: <%= @invoice.status %></p><br>
@@ -36,10 +46,10 @@ th {
         <td><%= invoice_item.item.name %></td>
         <td><%= invoice_item.quantity %></td>
         <td>$<%= invoice_item.item.current_price %></td>
-        <td id="update_status">
+        <td>
           <%= form_with url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}?item_id=#{invoice_item.item.id}", method: :patch, local: true do |f| %>
           <%= f.select :status, ["pending", "packaged", "shipped"], :selected => invoice_item.status %>
-          <%= f.submit 'Update Item Status' %>
+          <%= f.submit 'Update Item Status', id: 'submit-button' %>
           <% end %>
         </td>
       </tr>
