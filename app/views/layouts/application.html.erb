@@ -22,5 +22,8 @@
   </body>
   <footer>
    <%= @repo[:name] %>
+   <% @collabs.each do |collab| %>
+    <%= collab.login %>
+   <% end %>
   </footer>
 </html>
