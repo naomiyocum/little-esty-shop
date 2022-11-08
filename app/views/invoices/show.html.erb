@@ -46,7 +46,7 @@ td {
         <td><%= invoice_item.item.name %></td>
         <td><%= invoice_item.quantity %></td>
         <td>$<%= invoice_item.item.current_price %></td>
-        <td>
+        <td id="update_status">
           <%= form_with url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}?item_id=#{invoice_item.item.id}", method: :patch, local: true do |f| %>
           <%= f.select :status, ["pending", "packaged", "shipped"], :selected => invoice_item.status %>
           <%= f.submit 'Update Item Status', id: 'submit-button' %>
