@@ -3,6 +3,7 @@ require 'pry'
 require './app/poros/repo_name'
 require './app/poros/collaborator'
 require './app/services/github_service'
+require './app/poros/contributor'
 
 
 
@@ -17,4 +18,9 @@ class GithubSearch
     end
   end
 
+  def self.commits
+    GithubService.contributors.map do |contributor|
+      Contributor.new(contributor)
+    end
+  end
 end
