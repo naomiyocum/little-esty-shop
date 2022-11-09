@@ -31,7 +31,7 @@ class Invoice < ApplicationRecord
   end
 
   def self.incomplete_invoices
-    joins(:invoice_items).where("invoice_items.status != ?", 2).distinct.order(created_at: :desc)
+    joins(:invoice_items).where("invoice_items.status != ?", 2).distinct.order(:created_at)
   end
 
 end
