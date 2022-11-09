@@ -17,14 +17,14 @@ RSpec.describe Invoice, type: :model do
   let!(:invoice_6) {sanji.invoices.create!(status: 2)}
 
   let!(:invoice_item_1)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_1.id, quantity: 2, unit_price: 2999, status: "shipped")}
-  let!(:invoice_item_2)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_3.id, quantity: 1, unit_price: 2999, status: "shipped")}
-  let!(:invoice_item_3)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_5.id, quantity: 2, unit_price: 2999, status: "shipped")}
+  let!(:invoice_item_2)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_3.id, quantity: 1, unit_price: 2999, status: "packaged")}
+  let!(:invoice_item_3)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_5.id, quantity: 2, unit_price: 2999, status: "packaged")}
   let!(:invoice_item_4)  {InvoiceItem.create!(item_id: stickers.id, invoice_id: invoice_6.id, quantity: 5, unit_price: 100, status: "shipped")}
   let!(:invoice_item_5)  {InvoiceItem.create!(item_id: stickers.id, invoice_id: invoice_6.id, quantity: 1, unit_price: 100, status: "shipped")}
   let!(:invoice_item_6)  {InvoiceItem.create!(item_id: orion.id, invoice_id: invoice_6.id, quantity: 1, unit_price: 1000, status: "shipped")}
-  let!(:invoice_item_7)  {InvoiceItem.create!(item_id: orion.id, invoice_id: invoice_4.id, quantity: 1, unit_price: 1000, status: "shipped")}
-  let!(:invoice_item_8)  {InvoiceItem.create!(item_id: oil.id, invoice_id: invoice_4.id, quantity: 10, unit_price: 2599, status: "shipped")}
-  let!(:invoice_item_9)  {InvoiceItem.create!(item_id: pants.id, invoice_id: invoice_2.id, quantity: 1, unit_price: 2100, status: "shipped")}
+  let!(:invoice_item_7)  {InvoiceItem.create!(item_id: orion.id, invoice_id: invoice_4.id, quantity: 1, unit_price: 1000, status: "packaged")}
+  let!(:invoice_item_8)  {InvoiceItem.create!(item_id: oil.id, invoice_id: invoice_4.id, quantity: 10, unit_price: 2599, status: "packaged")}
+  let!(:invoice_item_9)  {InvoiceItem.create!(item_id: pants.id, invoice_id: invoice_2.id, quantity: 1, unit_price: 2100, status: "packaged")}
 
   let!(:stickers) {nomi.items.create!(name: "Anime Stickers", description: "Random One Piece and Death Note stickers", unit_price: 599)}
   let!(:lamp) {nomi.items.create!(name: "Lava Lamp", description: "Special blue/purple wax inside a glass vessel", unit_price: 2000)}
@@ -51,8 +51,14 @@ RSpec.describe Invoice, type: :model do
         expect(Invoice.uniq_invoices.count).to eq(6)
       end
     end
+
+    describe "incomplete_invoices" do
+      it 'should show incomplete invoices' do
+        expect(Invoice.incomplete_invoices).to include(invoice_2, invoice_5, invoice_4, invoice_3)
+      end
+    end
   end
-  
+
   describe 'instance methods' do
     describe '#my_total_revenue' do
       it 'returns the total revenue for a specific merchant' do

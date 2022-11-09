@@ -20,12 +20,12 @@ require 'time'
       @item_2 = Item.create!(name: "Lava Lamp", description: "Special blue/purple wax inside a glass vessel", unit_price: 2000, merchant_id: @merchant_2.id)
       @item_3 = Item.create!(name: "Orion Flag", description: "A flag of Okinawa's most popular beer", unit_price: 850, merchant_id: @merchant_3.id)
 
-      @invoice_1 = Invoice.create!(status: "in progress", customer_id: @customer_1.id)
-      @invoice_2 = Invoice.create!(status: "cancelled", customer_id: @customer_1.id)
-      @invoice_3 = Invoice.create!(status: "completed", customer_id: @customer_1.id)
-      @invoice_4 = Invoice.create!(status: "in progress", customer_id: @customer_2.id)
-      @invoice_5 = Invoice.create!(status: "in progress", customer_id: @customer_4.id)
-      @invoice_6 = Invoice.create!(status: "in progress", customer_id: @customer_2.id)
+      @invoice_1 = Invoice.create!(status: "in progress", customer_id: @customer_1.id, created_at: Time.parse("22.11.02"))
+      @invoice_2 = Invoice.create!(status: "cancelled", customer_id: @customer_1.id, created_at: Time.parse("22.11.06"))
+      @invoice_3 = Invoice.create!(status: "completed", customer_id: @customer_1.id, created_at: Time.parse("22.11.04"))
+      @invoice_4 = Invoice.create!(status: "in progress", customer_id: @customer_2.id, created_at: Time.parse("22.11.08"))
+      @invoice_5 = Invoice.create!(status: "in progress", customer_id: @customer_4.id, created_at: Time.parse("22.11.03"))
+      @invoice_6 = Invoice.create!(status: "in progress", customer_id: @customer_2.id, created_at: Time.parse("22.11.09"))
 
       @invoice_items_1 = InvoiceItem.create!(item_id: @item_1.id, invoice_id: @invoice_1.id, quantity: 2, unit_price: 11, status: "shipped", created_at: Time.parse("22.11.02"))
       @invoice_items_2 = InvoiceItem.create!(item_id: @item_2.id, invoice_id: @invoice_2.id, quantity: 2, unit_price: 11, status: "packaged", created_at: Time.parse("22.11.06"))
@@ -70,7 +70,6 @@ require 'time'
     end
 
     it 'has a section for "Incomplete Invoices' do
-
       expect(page).to have_content("Incomplete Invoices")
       expect(page).to have_content(@invoice_2.id)
       expect(page).to have_content(@invoice_3.id)
