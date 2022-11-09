@@ -25,6 +25,7 @@
    <% @collabs.each do |collab| %>
     <%= collab.login %>
    <% end %>
-   <%= @commits.sum {|user| user.commits} %>
+   <ul>Commits:<%= @commits.sum {|user| user.commits}%> Pull Requests:<%= @pulls.first.number %></ul>
+   
   </footer>
 </html>

@@ -23,4 +23,10 @@ class GithubSearch
       Contributor.new(contributor)
     end
   end
+
+  def self.pulls
+    GithubService.pulls.map do |pull|
+      Pull.new(pull)
+    end
+  end
 end

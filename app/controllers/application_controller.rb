@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
     @repo = GithubSearch.repo_name
     @collabs = GithubSearch.collab_info
     @commits = GithubSearch.commits
-
-
+    @pulls = GithubSearch.pulls
   end
 end
