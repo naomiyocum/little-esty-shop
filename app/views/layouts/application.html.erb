@@ -21,7 +21,7 @@
     <%= yield %>
   </body>
   <footer>
-   <ul><%= @repo[:name] %></ul>
+   <ul><%= @repo.repo_name %></ul>
    <ul>The contributors to this project include <%= @commits.map {|user| user.login}.to_sentence %></ul>
    <ul>Commits:<%= @commits.sum {|user| user.commits}%> Pull Requests:<%= @pulls.first.number %></ul>
   </footer>
