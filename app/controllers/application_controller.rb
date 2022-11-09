@@ -4,5 +4,8 @@ class ApplicationController < ActionController::Base
   def repo_name
     @repo = GithubSearch.repo_name
     @collabs = GithubSearch.collab_info
+    @commits = GithubSearch.commits
+
+
   end
 end
