@@ -22,12 +22,16 @@ class Invoice < ApplicationRecord
   def my_total_revenue_formatter(merchant)
     "%.2f" % my_total_revenue(merchant)
   end
-   
+
   def admin_total_revenue(invoice_name)
     invoice_items.joins(:invoice)
     .where(invoice_items: {invoice_id: self.id})
     .where(invoices: {id: invoice_name.id})
     .sum('invoice_items.unit_price * invoice_items.quantity')
   end
-end
 
+  def self.incomplete_invoices
+    joins(:invoice_items).where("invoice_items.status != ?", 2).distinct.order(created_at: :desc)
+  end
+
+end
