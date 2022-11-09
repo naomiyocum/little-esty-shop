@@ -1,9 +1,8 @@
 class ApplicationController < ActionController::Base
-  before_action :repo_name
+  before_action :github_info
 
-  def repo_name
+  def github_info
     @repo = GithubSearch.repo_name
-    @collabs = GithubSearch.collab_info
     @commits = GithubSearch.commits
     @pulls = GithubSearch.pulls
   end
