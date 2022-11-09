@@ -1,5 +1,4 @@
 require 'httparty'
-require 'pry'
 require './app/poros/repo_name'
 require './app/services/github_service'
 require './app/poros/contributor'

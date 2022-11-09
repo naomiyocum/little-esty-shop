@@ -38,8 +38,10 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'httparty'
 
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'pry-rails'
   gem 'pry'
   gem 'rspec-rails', '~> 4.0.1'
   gem 'shoulda-matchers', '~> 5.0'
