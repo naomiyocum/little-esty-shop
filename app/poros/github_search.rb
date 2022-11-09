@@ -6,7 +6,7 @@ require './app/poros/contributor'
 
 class GithubSearch
   def self.repo_name
-    GithubService.repo_name
+    RepoName.new(GithubService.repo_name)
   end
 
   def self.commits
