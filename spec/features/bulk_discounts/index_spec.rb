@@ -39,10 +39,8 @@ RSpec.describe 'The Bulk Discounts Index Page', type: :feature do
       visit merchant_bulk_discounts_path(nomi)
 
       click_link 'Create New Discount'
-      save_and_open_page
+
       expect(current_path).to eq(new_merchant_bulk_discount_path(nomi))
     end
-
-    # xit 'after submitting the form with valid data, I am redirected back to the index page and see the new discount' do
   end
 end
