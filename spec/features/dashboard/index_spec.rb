@@ -167,5 +167,15 @@ RSpec.describe 'merchant dashboard show page' do
         expect(page).to_not have_content("August 01,2019")
       end
     end
+
+    describe 'bulk discounts link' do
+      it 'includes a link to bulk discounts' do
+        visit merchant_dashboard_index_path(nomi)
+
+        click_link 'My Bulk Discounts'
+
+        expect(current_path).to eq(merchant_bulk_discounts_path(nomi))
+      end
+    end
   end
 end

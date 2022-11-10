@@ -1,0 +1,11 @@
+<%= render partial: 'layouts/merchants_header', locals: { merch_name: @merchant.name, merch_id: @merchant.id }%>
+
+<h3 style="background-color:#E0E0E0; border-top: 2px solid black;"><center>My Bulk Discounts</center></h3>
+
+<div id="bulk-discounts">
+  <% @merchant.bulk_discounts.each do |discount| %>
+    <p>Bulk Discount <%= link_to discount.id, merchant_bulk_discount_path(@merchant, discount) %></p>
+    <ul>Percentage Discount: <%= discount.percentage_discount %></ul>
+    <ul>Quantity Threshold: <%= discount.quantity_threshold %></ul>
+  <% end %>
+</div>
