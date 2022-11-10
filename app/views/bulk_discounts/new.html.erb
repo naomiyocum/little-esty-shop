@@ -1,0 +1,13 @@
+<%= render partial: 'layouts/merchants_header', locals: { merch_name: @merchant.name, merch_id: @merchant.id }%>
+
+<h3 style="background-color:#E0E0E0; border-top: 2px solid black;"><center>Add a New Bulk Discount</center></h3>
+
+<%= form_with url: merchant_bulk_discounts_path(@merchant), method: :post, local: true do |f| %>
+  <%= f.label :percentage_discount %>
+  <%= f.number_field :percentage_discount, step: 0.5 %><br><br>
+
+  <%= f.label :quantity_threshold %>
+  <%= f.number_field :quantity_threshold %><br><br>
+
+  <%= f.submit 'Create New Discount' %>
+<% end %>
