@@ -1,8 +1,8 @@
-class Contributor
-  attr_reader :commits, :login
+# class Contributor
+#   attr_reader :commits, :login
 
-  def initialize(data)
-    @commits = data[:contributions]
-    @login = data[:login]
-  end
-end
+#   def initialize(data)
+#     @commits = data[:contributions]
+#     @login = data[:login]
+#   end
+# end
