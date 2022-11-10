@@ -29,7 +29,7 @@ RSpec.describe 'The Bulk Discounts Index Page', type: :feature do
       visit merchant_bulk_discounts_path(nomi)
      
       within("#bulk-discounts") do
-        click_link bulk_1.id
+        click_link bulk_1.id.to_s
       end
 
     expect(current_path).to eq(merchant_bulk_discount_path(nomi, bulk_1))
