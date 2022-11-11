@@ -26,7 +26,7 @@ td {
 <div id="info">
   <p>Status: <%= @invoice.status %></p><br>
   <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p><br>
-  <p>Total Revenue: $<%= @invoice.my_total_revenue_formatter(@merchant) %></p><br>
+  <p>Total Revenue: $<%= @invoice.my_total_revenue_formatter %></p><br>
   <p>Customer:</p>
   <p style="text-indent:30px;"><%= @invoice.customer.first_name%> <%= @invoice.customer.last_name%></p>
 </div><br><br>
@@ -40,9 +40,10 @@ td {
         <th>Quantity</th>
         <th>Current Price</th>
         <th>Status</th>
+        <th>Bulk Discount</th>
       </tr>
       <% @invoice.invoice_items.uniq_invoice_items.each do |invoice_item| %>
-      <tr>
+      <tr id="invoice-item-<%= invoice_item.id %>">
         <td><%= invoice_item.item.name %></td>
         <td><%= invoice_item.quantity %></td>
         <td>$<%= invoice_item.item.current_price %></td>
@@ -50,6 +51,11 @@ td {
           <%= form_with url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}?item_id=#{invoice_item.item.id}", method: :patch, local: true do |f| %>
           <%= f.select :status, ["pending", "packaged", "shipped"], :selected => invoice_item.status %>
           <%= f.submit 'Update Item Status', id: 'submit-button' %>
+          <% end %>
+        </td>
+        <td>
+          <% if invoice_item.available_discount != nil %>
+            <p>#<%= link_to invoice_item.available_discount.id, merchant_bulk_discount_path(@merchant, invoice_item.available_discount) %></p>
           <% end %>
         </td>
       </tr>

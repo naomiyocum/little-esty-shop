@@ -1,16 +1,17 @@
 require 'rails_helper'
+require 'faker'
 
 RSpec.describe 'The Bulk Discounts Index Page', type: :feature do
-  let!(:nomi) {Merchant.create!(name: "Naomi LLC")}
-  let!(:tyty) {Merchant.create!(name: "TyTy's Grub")}
+  let!(:merch_1) {create(:merchant)}
+  let!(:merch_2) {create(:merchant)}
 
-  let!(:bulk_1) {nomi.bulk_discounts.create!(percentage_discount: 20, quantity_threshold: 10)}
-  let!(:bulk_2) {nomi.bulk_discounts.create!(percentage_discount: 50, quantity_threshold: 50)}
-  let!(:bulk_3) {tyty.bulk_discounts.create!(percentage_discount: 5, quantity_threshold: 3)}
+  let!(:bulk_1) {create(:bulk_discount, merchant: merch_1)}
+  let!(:bulk_2) {create(:bulk_discount, merchant: merch_1)}
+  let!(:bulk_3) {create(:bulk_discount, merchant: merch_2)}
   
   describe 'bulk_discounts#index' do
     it 'shows all of the merchants bulk discounts, including percentage and quantity thresholds' do
-      visit merchant_bulk_discounts_path(nomi)
+      visit merchant_bulk_discounts_path(merch_1)
 
       within("#bulk-discounts-#{bulk_1.id}") do
         expect(page).to have_content(bulk_1.id)
@@ -28,21 +29,21 @@ RSpec.describe 'The Bulk Discounts Index Page', type: :feature do
     end
 
     it 'each bulk discount listed includes a link to its show page' do
-      visit merchant_bulk_discounts_path(nomi)
+      visit merchant_bulk_discounts_path(merch_1)
      
       within("#bulk-discounts-#{bulk_1.id}") do
         click_link bulk_1.id.to_s
       end
 
-      expect(current_path).to eq(merchant_bulk_discount_path(nomi, bulk_1))
+      expect(current_path).to eq(merchant_bulk_discount_path(merch_1, bulk_1))
     end
 
     it 'a link to create a new bulk discount takes me to a new page' do
-      visit merchant_bulk_discounts_path(nomi)
+      visit merchant_bulk_discounts_path(merch_1)
 
       click_link 'Create New Discount'
 
-      expect(current_path).to eq(new_merchant_bulk_discount_path(nomi))
+      expect(current_path).to eq(new_merchant_bulk_discount_path(merch_1))
     end
   end
 end
