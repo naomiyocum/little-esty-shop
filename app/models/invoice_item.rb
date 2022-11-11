@@ -12,7 +12,7 @@ class InvoiceItem < ApplicationRecord
   end
 
 
-  def available_discounts
-    self.item.merchant.bulk_discounts
+  def available_discount
+    self.item.merchant.bulk_discounts.max_discount(self.quantity)
   end
 end

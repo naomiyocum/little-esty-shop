@@ -44,9 +44,10 @@ RSpec.describe InvoiceItem, type: :model do
       end
     end
 
-    describe '#max_discount' do
+    describe '#available_discount' do
       it 'returns the highest discount the invoice_item qualifies for' do
-        expect(invoice_item_1.max_discount). to eq(bulk_2)
+        expect(invoice_item_1.available_discount).to eq(bulk_2)
+        expect(invoice_item_3.available_discount).to eq(nil)
       end
     end
   end

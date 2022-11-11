@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe 'Invoice Show Page', type: :feature do
   let!(:merch_1) {create(:merchant)}
 
-  let!(:bulk_1) {create(:bulk_discount, merchant: merch_1, quantity_threshold: 5)}
-  let!(:bulk_2) {create(:bulk_discount, merchant: merch_1, quantity_threshold: 10)}
-  let!(:bulk_3) {create(:bulk_discount, merchant: merch_1, quantity_threshold: 20)}
+  let!(:bulk_1) {create(:bulk_discount, merchant: merch_1, quantity_threshold: 5, percentage_discount: 10)}
+  let!(:bulk_2) {create(:bulk_discount, merchant: merch_1, quantity_threshold: 10, percentage_discount: 15)}
+  let!(:bulk_3) {create(:bulk_discount, merchant: merch_1, quantity_threshold: 20, percentage_discount: 20)}
 
   let!(:customer_1) {create(:customer)}
   let!(:customer_2) {create(:customer)}
@@ -57,8 +57,8 @@ RSpec.describe 'Invoice Show Page', type: :feature do
         expect(page).to have_content('Bulk Discount')
       end
       
-      within ("#invoice-item-#{invoice_item_2.id}") do
-        click_link bulk_2.id.to_s
+      within ("#invoice-item-#{invoice_item_1.id}") do
+        click_on bulk_2.id.to_s
         expect(current_path).to eq(merchant_bulk_discount_path(merch_1, bulk_2))
       end
     end
