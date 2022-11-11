@@ -6,7 +6,7 @@
 <div id="info">
   <b>Invoice Status: </b><%= @invoice.status %><br><br>
   <b>Created on: </b><%= @invoice.created_at.strftime("%A, %B %d, %Y") %><br><br>
-  <b>Total Revenue: </b>$<%= @invoice.admin_total_revenue(@invoice) %><br><br>
+  <b>Total Revenue: </b>$<%= @invoice.my_total_revenue_formatter %><br><br>
   <b>Customer: </b><%= @invoice.customer.first_name%> <%= @invoice.customer.last_name%><br>
 </div><br>
 <section>

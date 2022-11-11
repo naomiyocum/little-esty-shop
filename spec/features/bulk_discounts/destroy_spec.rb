@@ -19,8 +19,8 @@ RSpec.describe 'Destroy Bulk Discount', type: :feature do
       
 
       expect(current_path).to eq(merchant_bulk_discounts_path(nomi))
-
-      expect(page).to_not have_content(bulk_1.id)
+      
+      expect(page).to_not have_content("Bulk Discount #{bulk_1.id}")
     end 
   end
 end

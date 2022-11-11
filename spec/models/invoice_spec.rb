@@ -62,19 +62,13 @@ RSpec.describe Invoice, type: :model do
   describe 'instance methods' do
     describe '#my_total_revenue' do
       it 'returns the total revenue for a specific merchant' do
-        expect(invoice_1.my_total_revenue(nomi)).to eq(5998)
+        expect(invoice_1.my_total_revenue).to eq(5998)
       end
     end
 
     describe '#my_total_revenue_formatter' do
       it 'formats the total revenue to have two decimal places' do
-        expect(invoice_1.my_total_revenue_formatter(nomi)).to eq("5998.00")
-      end
-    end
-
-    describe '#admin_total_revenue' do
-      it 'returns the total revenue for a specific merchant' do
-        expect(invoice_1.admin_total_revenue(invoice_1)).to eq(5998)
+        expect(invoice_1.my_total_revenue_formatter).to eq("5998.00")
       end
     end
   end
