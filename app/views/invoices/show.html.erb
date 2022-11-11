@@ -1,22 +1,22 @@
 <style>
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-  padding: 1em;
-}
-th {
-  background-color: #BFBFBF;
-}
-td {
-  background-color: #ECECEC;
-}
-#invoice {
-  background-color:#E0E0E0;
-  border-top: 2px solid black;
-}
-#submit-button {
-  background-color: #FFFFFF;
-}
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 1em;
+  }
+  th {
+    background-color: #BFBFBF;
+  }
+  td {
+    background-color: #ECECEC;
+  }
+  #invoice {
+    background-color:#E0E0E0;
+    border-top: 2px solid black;
+  }
+  #submit-button {
+    background-color: #FFFFFF;
+  }
 </style>
 
 <%= render partial: 'layouts/merchants_header', locals: { merch_name: @merchant.name, merch_id: @merchant.id }%>
