@@ -28,5 +28,13 @@ RSpec.describe 'Bulk Discount Show Page', type: :feature do
         expect(page).to have_content(bulk_1.quantity_threshold)
       end
     end
+
+    it 'when I click a link to update the discount I am taken to the edit page' do
+      visit merchant_bulk_discount_path(nomi, bulk_1)
+
+      click_link 'Update Discount'
+
+      expect(current_path).to eq(edit_merchant_bulk_discount_path(nomi, bulk_1))
+    end
   end
 end

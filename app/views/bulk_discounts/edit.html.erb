@@ -1,0 +1,11 @@
+<%= render partial: 'layouts/merchants_header', locals: { merch_name: @merchant.name, merch_id: @merchant.id }%>
+
+<h3 style="background-color:#E0E0E0; border-top: 2px solid black;"><center>Update Bulk Discount #<%= @discount.id %></center></h3>
+
+<%= render partial: 'form', locals: {
+  path: merchant_bulk_discount_path(@merchant, @discount),
+  method: :patch,
+  fill_in_percentage: @discount.percentage_discount,
+  fill_in_quantity: @discount.quantity_threshold,
+  button_text: 'Update Discount'
+}%>
