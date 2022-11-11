@@ -49,7 +49,7 @@ group :development, :test do
   gem 'simplecov'
   gem 'launchy'
   gem 'capybara'
-
+  gem 'factory_bot_rails'
 end
 
 group :development do
