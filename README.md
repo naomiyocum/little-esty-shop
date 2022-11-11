@@ -37,8 +37,8 @@ Project is created with:
 
 ## Schema Design
 Below is our database design with one-to-many and many-to-many relationships.
+<img width="912" alt="Screen Shot 2022-11-11 at 10 40 01 AM" src="https://user-images.githubusercontent.com/102825498/201411084-f15bc918-87bd-46a5-ac9b-34e8a1c3ed31.png">
 
-![Screen Shot 2022-11-07 at 2 52 34 PM](https://user-images.githubusercontent.com/102825498/200424743-560cf9fb-af10-44b0-8a3e-eb21690be5ed.png)
 
 ## Contributors
 <a href="https://github.com/naomiyocum/little-esty-shop/graphs/contributors">
