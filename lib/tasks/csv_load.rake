@@ -80,6 +80,7 @@ namespace :csv_load do
     Transaction.destroy_all
     Invoice.destroy_all
     Customer.destroy_all
+    BulkDiscount.destroy_all
     puts "Destroying the evidence"
   end
 
