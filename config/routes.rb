@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     resources :dashboard, only: [:index]
     resources :invoices, only: [:index, :show]
     resources :items, except: [:update, :destroy]
-    resources :bulk_discounts, except: [:update, :edit]
+    resources :bulk_discounts, except: [:update]
   end
 
   patch '/merchants/:merchant_id/invoices/:id', to: 'invoice_items#update'
