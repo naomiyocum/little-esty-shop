@@ -14,13 +14,13 @@ RSpec.describe 'The Bulk Discounts Index Page', type: :feature do
 
       within("#bulk-discounts-#{bulk_1.id}") do
         expect(page).to have_content(bulk_1.id)
-        expect(page).to have_content("Percentage Discount: #{bulk_1.percentage_discount}")
+        expect(page).to have_content("Percentage Discount: #{bulk_1.percentage_discount}%")
         expect(page).to have_content("Quantity Threshold: #{bulk_1.quantity_threshold}")
       end
 
       within("#bulk-discounts-#{bulk_2.id}") do
         expect(page).to have_content(bulk_2.id)
-        expect(page).to have_content("Percentage Discount: #{bulk_2.percentage_discount}")
+        expect(page).to have_content("Percentage Discount: #{bulk_2.percentage_discount}%")
         expect(page).to have_content("Quantity Threshold: #{bulk_2.quantity_threshold}")
       end
     
