@@ -1,22 +1,32 @@
 require 'rails_helper'
 
 RSpec.describe 'Bulk Discount Show Page', type: :feature do
-  let!(:nomi) {Merchant.create!(name: "Naomi LLC")}
-  let!(:tyty) {Merchant.create!(name: "TyTy's Grub")}
+  let!(:merch_1) {create(:merchant)}
+  let!(:merch_2) {create(:merchant)}
 
-  let!(:bulk_1) {nomi.bulk_discounts.create!(percentage_discount: 20, quantity_threshold: 10)}
-  let!(:bulk_2) {nomi.bulk_discounts.create!(percentage_discount: 50, quantity_threshold: 50)}
-  let!(:bulk_3) {tyty.bulk_discounts.create!(percentage_discount: 5, quantity_threshold: 3)}
+  let!(:bulk_1) {create(:bulk_discount, merchant: merch_1)}
+  let!(:bulk_2) {create(:bulk_discount, merchant: merch_1)}
+  let!(:bulk_3) {create(:bulk_discount, merchant: merch_1)}
+  let!(:bulk_4) {create(:bulk_discount, merchant: merch_2)}
+  let!(:bulk_5) {create(:bulk_discount, merchant: merch_2)}
+  let!(:bulk_6) {create(:bulk_discount, merchant: merch_2)}
+
+  let!(:item_1) {create(:item, merchant: merch_1)}
+  let!(:item_2) {create(:item, merchant: merch_1)}
+  let!(:item_3) {create(:item, merchant: merch_1)}
+  let!(:item_4) {create(:item, merchant: merch_2)}
+  let!(:item_5) {create(:item, merchant: merch_2)}
+  let!(:item_6) {create(:item, merchant: merch_2)}
 
   describe 'bulk_discount#show' do
     it 'displays the specific discounts percentage discount and quantity threshold' do
-      visit merchant_bulk_discounts_path(nomi)
-
+      visit merchant_bulk_discounts_path(merch_1)
+    
       within("#bulk-discounts-#{bulk_1.id}") do
         click_link bulk_1.id.to_s
       end
 
-      expect(current_path).to eq(merchant_bulk_discount_path(nomi, bulk_1))
+      expect(current_path).to eq(merchant_bulk_discount_path(merch_1, bulk_1))
 
       within("#percentage") do
         expect(page).to have_content("Percentage Discount")
@@ -30,11 +40,11 @@ RSpec.describe 'Bulk Discount Show Page', type: :feature do
     end
 
     it 'when I click a link to update the discount I am taken to the edit page' do
-      visit merchant_bulk_discount_path(nomi, bulk_1)
+      visit merchant_bulk_discount_path(merch_1, bulk_1)
 
       click_link 'Update Discount'
 
-      expect(current_path).to eq(edit_merchant_bulk_discount_path(nomi, bulk_1))
+      expect(current_path).to eq(edit_merchant_bulk_discount_path(merch_1, bulk_1))
     end
   end
 end
