@@ -1,3 +1,5 @@
-<h1> <%= @merchant.name %></h1>
+<%= render partial: 'layouts/admin_header'%>
+
+<center><h2 style="background-color:#E0E0E0; border-top: 2px solid black"><%= @merchant.name %></center></h2><br>
 
 <%= link_to "Update Merchant Info", "/admin/merchants/#{@merchant.id}/edit" %>
