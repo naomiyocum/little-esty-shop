@@ -83,6 +83,6 @@ namespace :csv_load do
     puts "Destroying the evidence"
   end
 
-  task all: [:customers, :merchants, :items, :invoices, :invoice_items, :transactions]
+  task all: [:customers, :merchants, :items, :invoices, :invoice_items, :transactions, :bulk_discounts]
 
 end
