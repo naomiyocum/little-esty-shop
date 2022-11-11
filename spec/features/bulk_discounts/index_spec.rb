@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'faker'
 
 RSpec.describe 'The Bulk Discounts Index Page', type: :feature do
-   let!(:merch_1) {create(:merchant)}
+  let!(:merch_1) {create(:merchant)}
   let!(:merch_2) {create(:merchant)}
 
   let!(:bulk_1) {create(:bulk_discount, merchant: merch_1)}

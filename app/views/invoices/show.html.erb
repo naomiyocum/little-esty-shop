@@ -40,9 +40,10 @@ td {
         <th>Quantity</th>
         <th>Current Price</th>
         <th>Status</th>
+        <th>Bulk Discount</th>
       </tr>
       <% @invoice.invoice_items.uniq_invoice_items.each do |invoice_item| %>
-      <tr>
+      <tr id="invoice-item-<%= invoice_item.id %>">
         <td><%= invoice_item.item.name %></td>
         <td><%= invoice_item.quantity %></td>
         <td>$<%= invoice_item.item.current_price %></td>
@@ -52,6 +53,7 @@ td {
           <%= f.submit 'Update Item Status', id: 'submit-button' %>
           <% end %>
         </td>
+        <td><%= %></td>
       </tr>
       <% end %>
     </table>
