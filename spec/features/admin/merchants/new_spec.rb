@@ -11,7 +11,7 @@ RSpec.describe "admin merchant edit page" do
   end
 
   it "can create new merchant" do
-    expect(page).to have_content("New Admin Merchant Page")
+    expect(page).to have_content("Create a New Merchant")
     fill_in "name", with: "5th Teammate LLC"
     click_button "Submit"
     expect(current_path).to eq("/admin/merchants")
