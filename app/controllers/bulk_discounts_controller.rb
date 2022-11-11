@@ -17,7 +17,7 @@ class BulkDiscountsController < ApplicationController
     @new_discount = @merchant.bulk_discounts.new(discount_params)
 
     if @new_discount.save
-      flash[:notice] = "Successfully Created #{@new_discount.id}"
+      flash[:notice] = "Successfully Created Bulk Discount ##{@new_discount.id}"
       redirect_to merchant_bulk_discounts_path(@merchant)
     else
       redirect_to new_merchant_bulk_discount_path(@merchant)
@@ -42,7 +42,7 @@ class BulkDiscountsController < ApplicationController
     discount = BulkDiscount.find(params[:id])
     
     if discount.update(discount_params)
-      flash[:notice] = "Successfully Updated #{discount.id}"
+      flash[:notice] = "Successfully Updated Bulk Discount ##{discount.id}"
       redirect_to merchant_bulk_discount_path(merchant, discount)
     else
       redirect_to edit_merchant_bulk_discount_path(merchant, discount)

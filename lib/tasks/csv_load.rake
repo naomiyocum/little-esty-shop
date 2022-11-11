@@ -63,6 +63,16 @@ namespace :csv_load do
     puts "......"
   end
 
+  task bulk_discounts: :environment do
+    csv_text = File.read(Rails.root.join("db", "data", "bulk_discounts.csv"))
+    csv = CSV.parse(csv_text, :headers => true)
+    csv.each do |row|
+      BulkDiscount.create!(row.to_hash)
+    end
+    ActiveRecord::Base.connection.reset_pk_sequence!('bulk_discounts')
+    puts "GOOD TO GO!"
+  end
+
   task delete_all: :environment do
     InvoiceItem.destroy_all
     Item.destroy_all

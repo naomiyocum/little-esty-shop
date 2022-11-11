@@ -45,7 +45,7 @@ require 'rails_helper'
     end
 
     it "has a header" do 
-      expect(page).to have_content("Admin Invoices Index")
+      expect(page).to have_content("Invoices")
     end
 
     it "has invoice ID links" do 
