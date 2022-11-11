@@ -1,8 +1,9 @@
 require 'rails_helper'
+require 'faker'
 
 RSpec.describe 'The Bulk Discounts Index Page', type: :feature do
-  let!(:nomi) {Merchant.create!(name: "Naomi LLC")}
-  let!(:tyty) {Merchant.create!(name: "TyTy's Grub")}
+  let!(:nomi) {Merchant.create!(name: (Faker::JapaneseMedia::OnePiece.character))}
+  let!(:tyty) {Merchant.create!(name: (Faker::JapaneseMedia::OnePiece.character))}
 
   let!(:bulk_1) {nomi.bulk_discounts.create!(percentage_discount: 20, quantity_threshold: 10)}
   let!(:bulk_2) {nomi.bulk_discounts.create!(percentage_discount: 50, quantity_threshold: 50)}
