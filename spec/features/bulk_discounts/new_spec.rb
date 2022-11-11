@@ -19,7 +19,7 @@ RSpec.describe 'Bulk Discount New Discount', type: :feature do
 
       new_discount = BulkDiscount.last
       
-      expect(page).to have_content("Successfully Created #{new_discount.id}")
+      expect(page).to have_content("Successfully Created Bulk Discount ##{new_discount.id}")
       expect(current_path).to eq(merchant_bulk_discounts_path(nomi))
 
       within "#bulk-discounts-#{new_discount.id}" do

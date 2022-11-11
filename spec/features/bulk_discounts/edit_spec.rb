@@ -23,7 +23,7 @@ RSpec.describe 'Bulk Discount Edit Page', type: :feature do
       fill_in :quantity_threshold, with: 30
       click_button 'Update Discount'
       
-      expect(page).to have_content("Successfully Updated #{bulk_1.id}")
+      expect(page).to have_content("Successfully Updated Bulk Discount ##{bulk_1.id}")
       expect(current_path).to eq(merchant_bulk_discount_path(nomi, bulk_1))
 
       within("#percentage") do
