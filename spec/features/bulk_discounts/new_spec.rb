@@ -12,7 +12,7 @@ RSpec.describe 'Bulk Discount New Discount', type: :feature do
     it 'after submitting the form with valid data, I am redirected back to the index page and see the new discount' do
       visit new_merchant_bulk_discount_path(nomi)
 
-      fill_in :percentage_discount, with: 34.5
+      fill_in :percentage_discount, with: 34
       fill_in :quantity_threshold, with: 19
 
       click_button 'Create New Discount'
@@ -21,7 +21,7 @@ RSpec.describe 'Bulk Discount New Discount', type: :feature do
 
       new_discount = BulkDiscount.last
 
-      within "#bulk-discounts" do
+      within "#bulk-discounts-#{new_discount.id}" do
         expect(page).to have_content(new_discount.id)
         expect(page).to have_content("Percentage Discount: #{new_discount.percentage_discount}")
         expect(page).to have_content("Quantity Threshold: #{new_discount.quantity_threshold}")
