@@ -34,6 +34,7 @@
         <p><%= "#{five.first_name} #{five.last_name} - #{five.transaction_count} Purchases" %></p>
       <% end %>
     </div>
+    <%= link_to "My Discounts", merchant_bulk_discounts_path(@merchant)%>
   </div>
 </body>
 </html>
