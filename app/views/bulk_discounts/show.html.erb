@@ -1,0 +1,14 @@
+<%= render partial: 'layouts/merchants_header', locals: { merch_name: @merchant.name, merch_id: @merchant.id }%>
+
+<center><h2 style="background-color:#E0E0E0; border-top: 2px solid black">Bulk Discount #<%= @discount.id %></center></h2><br>
+
+<div id="discount-info">
+  <div id="percentage">
+    <p style="font-weight:bold;">Percentage Discount</p>
+    <ul><%= @discount.percentage_discount %>%</ul>
+  </div>
+  <div id="quantity">
+    <p style="font-weight:bold;">Quantity Threshold</p>
+    <ul><%= @discount.quantity_threshold %></ul>
+  </div>
+</div>
