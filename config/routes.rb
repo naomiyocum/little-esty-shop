@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   patch '/merchants/:merchant_id/items', to: 'items#update'
   patch '/merchants/:merchant_id/items/:id', to: 'items#update'
 
+  patch '/merchants/:merchant_id/bulk_discounts/:id', to: 'bulk_discounts#update'
+
   resources :admin, only: [:index]
 
   namespace :admin, except: [:destroy, :update] do
