@@ -11,13 +11,6 @@ RSpec.describe 'Bulk Discount Show Page', type: :feature do
   let!(:bulk_5) {create(:bulk_discount, merchant: merch_2)}
   let!(:bulk_6) {create(:bulk_discount, merchant: merch_2)}
 
-  let!(:item_1) {create(:item, merchant: merch_1)}
-  let!(:item_2) {create(:item, merchant: merch_1)}
-  let!(:item_3) {create(:item, merchant: merch_1)}
-  let!(:item_4) {create(:item, merchant: merch_2)}
-  let!(:item_5) {create(:item, merchant: merch_2)}
-  let!(:item_6) {create(:item, merchant: merch_2)}
-
   describe 'bulk_discount#show' do
     it 'displays the specific discounts percentage discount and quantity threshold' do
       visit merchant_bulk_discounts_path(merch_1)
