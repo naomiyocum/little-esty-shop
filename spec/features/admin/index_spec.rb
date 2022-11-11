@@ -41,7 +41,7 @@ require 'time'
       @transaction_5 = Transaction.create!(credit_card_number: 3333333333333333, credit_card_expiration_date: "01/21", result: "success", invoice_id: @invoice_5.id)
       @transaction_6 = Transaction.create!(credit_card_number: 3333333333333333, credit_card_expiration_date: "01/21", result: "success", invoice_id: @invoice_6.id)
 
-      visit '/admin'
+      visit admin_index_path
     end
 
     it "has a header" do
@@ -49,15 +49,15 @@ require 'time'
     end
 
     it "has link to merchant index" do
-      expect(page).to have_link('Admin Merchants Index')
-      click_on "Admin Merchants Index"
-      expect(current_path).to eq("/admin/merchants")
+      expect(page).to have_link('Merchants')
+      click_on "Merchants"
+      expect(current_path).to eq(admin_merchants_path)
     end
 
     it "has link to merchant invoices" do
-      expect(page).to have_link('Admin Invoices Index')
-      click_on "Admin Invoices Index"
-      expect(current_path).to eq("/admin/invoices")
+      expect(page).to have_link('Invoices')
+      click_on "Invoices"
+      expect(current_path).to eq(admin_invoices_path)
     end
 
     it 'shows the top 5 customers with the count of successul transactions next to each name' do
