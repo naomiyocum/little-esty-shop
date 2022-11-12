@@ -26,7 +26,8 @@
 <div id="info">
   <p>Status: <%= @invoice.status %></p><br>
   <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p><br>
-  <p>Total Revenue: $<%= @invoice.my_total_revenue_formatter %></p><br>
+  <p>Total Revenue: $<%= @invoice.price_formatter(@invoice.my_total_revenue) %></p><br>
+  <p>Discounted Revenue: $<%= @invoice.price_formatter(@invoice.discounted_revenue) %></p><br>
   <p>Customer:</p>
   <p style="text-indent:30px;"><%= @invoice.customer.first_name%> <%= @invoice.customer.last_name%></p>
 </div><br><br>

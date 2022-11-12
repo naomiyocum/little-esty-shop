@@ -16,10 +16,6 @@ class Invoice < ApplicationRecord
     invoice_items.sum("unit_price * quantity")
   end
 
-  def my_total_revenue_formatter
-    "%.2f" % my_total_revenue
-  end
-
   def self.incomplete_invoices
     joins(:invoice_items).where("invoice_items.status != ?", 2).distinct.order(:created_at)
   end

@@ -61,9 +61,9 @@ RSpec.describe Invoice, type: :model do
       end
     end
 
-    describe '#my_total_revenue_formatter' do
-      it 'formats the total revenue to have two decimal places' do
-        expect(invoice_1.my_total_revenue_formatter).to eq("1735.00")
+    describe '#price_formatter' do
+      it 'returns the price formatted correctly' do
+        expect(invoice_1.price_formatter(invoice_1.my_total_revenue)).to eq('17.00')
       end
     end
 
