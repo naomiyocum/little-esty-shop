@@ -14,10 +14,10 @@ RSpec.describe InvoiceItem, type: :model do
   let!(:invoice_1) {customer_1.invoices.create!(status: 2, created_at: Time.parse("22.11.03"))}
   let!(:invoice_2) {create(:invoice, customer: customer_1)}
 
-  let!(:invoice_item_1) {create(:invoice_item, invoice: invoice_1, item: item_1, quantity: 10, status: 0)}
-  let!(:invoice_item_2) {create(:invoice_item, invoice: invoice_1, item: item_2, quantity: 5)}
-  let!(:invoice_item_3) {create(:invoice_item, invoice: invoice_1, item: item_3, quantity: 1)}
-  let!(:invoice_item_4) {create(:invoice_item, invoice: invoice_1, item: item_4, quantity: 12)}
+  let!(:invoice_item_1) {create(:invoice_item, invoice: invoice_1, item: item_1, quantity: 10, unit_price: 100, status: 0)}
+  let!(:invoice_item_2) {create(:invoice_item, invoice: invoice_1, item: item_2, quantity: 5, unit_price: 20, status: 0)}
+  let!(:invoice_item_3) {create(:invoice_item, invoice: invoice_1, item: item_3, quantity: 1, unit_price: 35, status: 0)}
+  let!(:invoice_item_4) {create(:invoice_item, invoice: invoice_1, item: item_4, quantity: 12, unit_price: 50, status: 0)}
 
   let!(:item_1) {create(:item, merchant: merch_1)}
   let!(:item_2) {create(:item, merchant: merch_1)}
@@ -37,13 +37,27 @@ RSpec.describe InvoiceItem, type: :model do
     it {should validate_presence_of(:status)}
   end
 
-  describe 'model tests' do
+  describe 'class methods' do
     describe '#uniq_invoice_items' do
       it 'returns a unique list of invoice items' do
         expect(InvoiceItem.uniq_invoice_items.count).to eq(4)
       end
     end
 
+    describe '#qualified_invoice_items' do
+      it 'returns the invoice_items that qualify for a discount' do
+        expect(invoice_1.invoice_items.qualified_invoice_items.count).to eq(3)
+      end
+    end
+    
+    describe '#all_discounts' do
+      it 'returns the sum of discounts applied to the invoice' do
+          expect(invoice_1.invoice_items.all_discounts).to eq(1535)
+      end
+    end
+  end
+
+  describe 'instance methods' do
     describe '#available_discount' do
       it 'returns the highest discount the invoice_item qualifies for' do
         expect(invoice_item_1.available_discount).to eq(bulk_2)
@@ -51,6 +65,4 @@ RSpec.describe InvoiceItem, type: :model do
       end
     end
   end
-
-
 end

@@ -11,6 +11,16 @@ class InvoiceItem < ApplicationRecord
     distinct
   end
 
+  def self.qualified_invoice_items
+    joins(item: [merchant: :bulk_discounts])
+      .where('invoice_items.quantity >= bulk_discounts.quantity_threshold')
+      .group('invoice_items.id')
+  end
+
+  def self.all_discounts
+
+  end
+
 
   def available_discount
     self.item.merchant.bulk_discounts.max_discount(self.quantity)
