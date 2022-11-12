@@ -4,14 +4,25 @@
 
 <%= link_to 'Create New Discount', new_merchant_bulk_discount_path(@merchant) %>
 
-
-<% @merchant.bulk_discounts.each do |discount| %>
-  <div id="bulk-discounts-<%= discount.id %>">
-    <p>Bulk Discount <%= link_to discount.id, merchant_bulk_discount_path(@merchant, discount) %></p>
-    <ul>Percentage Discount: <%= discount.percentage_discount %>%</ul>
-    <ul>Quantity Threshold: <%= discount.quantity_threshold %></ul>
-    <ul>
-      <%= button_to 'Delete', "/merchants/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete %>
-    </ul>
+<div style="width:100%">
+  <div style="float:left;width:50%">
+  <% @merchant.bulk_discounts.each do |discount| %>
+    <div id="bulk-discounts-<%= discount.id %>">
+      <p>Bulk Discount <%= link_to discount.id, merchant_bulk_discount_path(@merchant, discount) %></p>
+      <ul>Percentage Discount: <%= discount.percentage_discount %>%</ul>
+      <ul>Quantity Threshold: <%= discount.quantity_threshold %></ul>
+      <ul>
+        <%= button_to 'Delete', "/merchants/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete %>
+      </ul>
+    </div>
+  <% end %>
   </div>
-<% end %>
+
+  <div style="float:right;width:50%;">
+    <h3>Upcoming Holidays!</h3>
+    <% @holidays.take(3).each do |holiday| %>
+      <p><%= holiday.name %></p>
+      <p style="text-indent:40px;"><%= holiday.date %></p>
+    <% end %>
+  </div>
+</div>
