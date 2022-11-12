@@ -89,10 +89,10 @@ RSpec.describe Merchant, type: :model do
     it 'returns the names of items of a particular merchant that have not been shipped' do
 
       expect(nomi.not_yet_shipped[0].item.name).to eq("Book")
-      expect(nomi.not_yet_shipped[1].item.name).to eq("Lava Lamp")
-      expect(nomi.not_yet_shipped[2].item.name).to eq("Orion Flag")
+      expect(nomi.not_yet_shipped[1].item.name).to eq("Lava lamp")
+      expect(nomi.not_yet_shipped[2].item.name).to eq("Orion flag")
       expect(nomi.not_yet_shipped[3].item.name).to eq("Book")
-      expect(nomi.not_yet_shipped[4].item.name).to eq("Anime Stickers")
+      expect(nomi.not_yet_shipped[4].item.name).to eq("Anime stickers")
     end
   end
 

@@ -43,18 +43,6 @@ RSpec.describe InvoiceItem, type: :model do
         expect(InvoiceItem.uniq_invoice_items.count).to eq(4)
       end
     end
-
-    describe '#qualified_invoice_items' do
-      it 'returns the invoice_items that qualify for a discount' do
-        expect(invoice_1.invoice_items.qualified_invoice_items.count).to eq(3)
-      end
-    end
-    
-    describe '#all_discounts' do
-      it 'returns the sum of discounts applied to the invoice' do
-          expect(invoice_1.invoice_items.all_discounts).to eq(1535)
-      end
-    end
   end
 
   describe 'instance methods' do
@@ -62,6 +50,27 @@ RSpec.describe InvoiceItem, type: :model do
       it 'returns the highest discount the invoice_item qualifies for' do
         expect(invoice_item_1.available_discount).to eq(bulk_2)
         expect(invoice_item_3.available_discount).to eq(nil)
+      end
+    end
+
+    describe '#my_rev' do
+      it 'returns the revenue for a specific invoice_item' do
+        expect(invoice_item_1.my_revenue).to eq(1000)
+        expect(invoice_item_2.my_revenue).to eq(100)
+      end
+    end
+
+    describe '#discount_calc' do
+      it 'returns the dollar amount discount an invoice_item gets' do
+        expect(invoice_item_1.discount_calc).to eq(0.1)
+        expect(invoice_item_2.discount_calc).to eq(0.05)
+      end
+    end
+
+    describe '#discount_dollars' do
+      it 'returns the new price after discount' do
+        expect(invoice_item_1.discount_dollars).to eq(100)
+        expect(invoice_item_2.discount_dollars).to eq(5)
       end
     end
   end

@@ -66,5 +66,23 @@ RSpec.describe Invoice, type: :model do
         expect(invoice_1.my_total_revenue_formatter).to eq("1735.00")
       end
     end
+
+    describe '#qualified_invoice_items' do
+      it 'returns the invoice_items that qualify for a discount' do
+        expect(invoice_1.qualified_invoice_items.length).to eq(3)
+      end
+    end
+
+    describe '#all_discounts' do
+      it 'returns the sum of discounts applied to the invoice' do
+        expect(invoice_1.all_discounts).to eq(165)
+      end
+    end
+
+    describe '#discounted_revenue' do
+      it 'returns the revenue after discounts are applied' do
+        expect(invoice_1.discounted_revenue).to eq(1570)
+      end
+    end
   end
 end
