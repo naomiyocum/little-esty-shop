@@ -1,22 +1,22 @@
 <style>
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-  padding: 1em;
-}
-th {
-  background-color: #BFBFBF;
-}
-td {
-  background-color: #ECECEC;
-}
-#invoice {
-  background-color:#E0E0E0;
-  border-top: 2px solid black;
-}
-#submit-button {
-  background-color: #FFFFFF;
-}
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 1em;
+  }
+  th {
+    background-color: #BFBFBF;
+  }
+  td {
+    background-color: #ECECEC;
+  }
+  #invoice {
+    background-color:#E0E0E0;
+    border-top: 2px solid black;
+  }
+  #submit-button {
+    background-color: #FFFFFF;
+  }
 </style>
 
 <%= render partial: 'layouts/merchants_header', locals: { merch_name: @merchant.name, merch_id: @merchant.id }%>
@@ -26,7 +26,8 @@ td {
 <div id="info">
   <p>Status: <%= @invoice.status %></p><br>
   <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p><br>
-  <p>Total Revenue: $<%= @invoice.my_total_revenue_formatter %></p><br>
+  <p>Total Revenue: $<%= @invoice.price_formatter(@invoice.my_total_revenue) %></p><br>
+  <p>Discounted Revenue: $<%= @invoice.price_formatter(@invoice.discounted_revenue) %></p><br>
   <p>Customer:</p>
   <p style="text-indent:30px;"><%= @invoice.customer.first_name%> <%= @invoice.customer.last_name%></p>
 </div><br><br>

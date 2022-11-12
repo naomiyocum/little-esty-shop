@@ -11,8 +11,19 @@ class InvoiceItem < ApplicationRecord
     distinct
   end
 
+  def discount_dollars
+    (my_revenue * discount_calc).to_i
+  end
+
+  def my_revenue
+    quantity * unit_price
+  end
+
+  def discount_calc
+    available_discount.percentage_discount / 100.0
+  end
 
   def available_discount
-    self.item.merchant.bulk_discounts.max_discount(self.quantity)
+    item.merchant.bulk_discounts.max_discount(quantity)
   end
 end

@@ -7,6 +7,10 @@ class Item < ApplicationRecord
   validates :name, :description, :status, :presence => true
   validates :unit_price, presence: :true, numericality: :true
 
+  before_create do
+    self.name = name.capitalize
+  end
+
   enum status: [:enabled, :disabled]
 
   def current_price
