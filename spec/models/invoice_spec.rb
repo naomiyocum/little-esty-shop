@@ -69,7 +69,7 @@ RSpec.describe Invoice, type: :model do
 
     describe '#qualified_invoice_items' do
       it 'returns the invoice_items that qualify for a discount' do
-        expect(invoice_1.qualified_invoice_items.length).to eq(3)
+        expect(invoice_1.qualified_invoice_items).to eq([invoice_item_1, invoice_item_2, invoice_item_4])
       end
     end
 
