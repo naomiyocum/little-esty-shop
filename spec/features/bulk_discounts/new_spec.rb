@@ -12,6 +12,10 @@ RSpec.describe 'Bulk Discount New Discount', type: :feature do
     it 'after submitting the form with valid data, I am redirected back to the index page and see the new discount' do
       visit new_merchant_bulk_discount_path(merch_1)
 
+      expect(page).to have_field :percentage_discount
+      expect(page).to have_field :quantity_threshold
+      expect(page).to have_button 'Create New Discount'
+
       fill_in :percentage_discount, with: 34
       fill_in :quantity_threshold, with: 19
 

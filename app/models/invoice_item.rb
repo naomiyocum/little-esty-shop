@@ -20,10 +20,10 @@ class InvoiceItem < ApplicationRecord
   end
 
   def discount_calc
-    available_discount.percentage_discount / 100.0
+    best_discount.percentage_discount / 100.0
   end
 
-  def available_discount
+  def best_discount
     item.merchant.bulk_discounts.max_discount(quantity)
   end
 end

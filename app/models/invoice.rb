@@ -8,6 +8,8 @@ class Invoice < ApplicationRecord
 
   enum status: ["in progress", "cancelled", "completed"]
 
+  scope :incomplete, -> { where("invoice_items.status != ?", 2) }
+
   def self.uniq_invoices
     distinct
   end
@@ -17,7 +19,7 @@ class Invoice < ApplicationRecord
   end
 
   def self.incomplete_invoices
-    joins(:invoice_items).where("invoice_items.status != ?", 2).distinct.order(:created_at)
+    joins(:invoice_items).incomplete.distinct.order(:created_at)
   end
 
   def qualified_invoice_items
@@ -27,7 +29,7 @@ class Invoice < ApplicationRecord
   end
 
   def all_discounts
-    qualified_invoice_items.sum {|item| item.discount_dollars}
+    qualified_invoice_items.sum {|invoice_item| invoice_item.discount_dollars}
   end
 
   def discounted_revenue
