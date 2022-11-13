@@ -1,5 +1,5 @@
 require 'rails_helper'
-RSpec.describe 'merchant bulk discounts index page' do
+RSpec.describe 'bulk_discount new page' do
   let!(:nomi) {Merchant.create!(name: "Naomi LLC")}
   let!(:tyty) {Merchant.create!(name: "TyTy's Grub")}
   
@@ -55,46 +55,54 @@ RSpec.describe 'merchant bulk discounts index page' do
   let!(:transaction_11) {Transaction.create!(credit_card_number: 2000000000000000, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_11.id)}
   let!(:transaction_12) {Transaction.create!(credit_card_number: 2000000000000000, credit_card_expiration_date: "01/21", result: "failed", invoice_id: invoice_12.id)}
   let!(:transaction_13) {Transaction.create!(credit_card_number: 3333333333333333, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_13.id)}
-  
   let!(:discount_20p_10i) {BulkDiscount.create!(name: "20 off for 10", threshold: 10, percentage_discount: 20, merchant_id: nomi.id)}
   let!(:discount_30p_15i) {BulkDiscount.create!(name: "30 off for 15", threshold: 15, percentage_discount: 30, merchant_id: nomi.id)}
-  let!(:discount_31p_15i) {BulkDiscount.create!(name: "31 off for 15", threshold: 15, percentage_discount: 30, merchant_id: tyty.id)}
 
-  describe 'As a merchant' do
-    describe 'When I visit my merchant dashboard' do
-      it 'shows a link to merchant discount index page' do
-        visit merchant_dashboard_index_path(nomi)
-
-        expect(page).to have_link("My Discounts")
-      end
-
-      it 'when I click on my discount link I go to bulk discount index page' do
-        visit merchant_dashboard_index_path(nomi)
-        
-        click_on("My Discounts")
-        
-        expect(page).to have_current_path(merchant_bulk_discounts_path(nomi))
-      end
-
-      it 'each discount has a link' do
-        visit merchant_bulk_discounts_path(nomi, discount_20p_10i)
-
-        expect(page).to have_link("#{discount_20p_10i.name}")
-      end
-
-      it 'when I click the discount link I go to its show page' do
-        visit merchant_bulk_discounts_path(nomi, discount_20p_10i)
-
-        click_on(discount_20p_10i.name)
-
-        expect(page).to have_current_path(merchant_bulk_discount_path(nomi, discount_20p_10i))
-      end
-
-      it 'next to each bulk discount I see a link to delete it' do
+  describe 'as a merchant' do
+    describe 'I visit bulk discounts index page' do
+      it 'has a link to create a new discount' do
         visit merchant_bulk_discounts_path(nomi)
 
-        expect(page).to have_button("Delete #{discount_20p_10i.name}")
-        expect(page).to_not have_button("Delete #{discount_31p_15i.name}")
+        within("#new_discount") do
+          expect(page).to have_link("Create New Discount")
+        end
+      end
+
+      it "when I click the link I am taken to new bulk discount page" do
+        visit merchant_bulk_discounts_path(nomi)
+
+        within("#new_discount") do
+          click_on("Create New Discount")
+
+          expect(page).to have_current_path(new_merchant_bulk_discount_path(nomi))
+        end
+      end
+
+      it "I fill in the form with data and and redirected to bulk discount index" do
+        visit new_merchant_bulk_discount_path(nomi)
+        
+        fill_in('Name', with: '10 off 10!')
+        fill_in('percentage_discount', with: 10)
+        fill_in('threshold', with: 10)
+        
+        click_button('Submit')
+        
+        new_discount = BulkDiscount.last
+        expect(current_path).to eq(merchant_bulk_discounts_path(nomi))
+        expect(page).to have_content(new_discount.name)
+      end
+
+      it "It returns an error message if fields are not filled correctly" do
+        visit new_merchant_bulk_discount_path(nomi)
+        
+        fill_in('Name', with: ' ')
+        fill_in('percentage_discount', with: 1)
+        fill_in('threshold', with: 10)
+        
+        click_button('Submit')
+        
+        expect(current_path).to eq(new_merchant_bulk_discount_path(nomi))
+        expect(page).to have_content("Name can't be blank")
       end
     end
   end

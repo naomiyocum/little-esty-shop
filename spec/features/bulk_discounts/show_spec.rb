@@ -60,5 +60,14 @@ RSpec.describe 'bulk discounts show page' do
   let!(:discount_20p_10i) {BulkDiscount.create!(name: "20 off for 10", threshold: 10, percentage_discount: 20, merchant_id: nomi.id)}
   let!(:discount_30p_15i) {BulkDiscount.create!(name: "30 off for 15", threshold: 15, percentage_discount: 30, merchant_id: nomi.id)}
 
-  
+  describe "when I visit the merchat bulk discount show page" do
+    it "I see the discounts threshold and percentage discount" do
+      visit merchant_bulk_discount_path(nomi, discount_20p_10i)
+
+      expect(page).to have_content(discount_20p_10i.name)
+      expect(page).to have_content(discount_20p_10i.threshold)
+      expect(page).to have_content(discount_20p_10i.percentage_discount)
+    end
+  end
 end
+  

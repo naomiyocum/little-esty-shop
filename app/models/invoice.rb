@@ -13,6 +13,7 @@ class Invoice < ApplicationRecord
   end
 
   def my_total_revenue(merchant)
+    # require 'pry'; binding.pry
     invoice_items.joins(:item)
                   .where(invoice_items: {invoice_id: self.id})
                   .where(items: {merchant_id: merchant.id})
@@ -34,4 +35,12 @@ class Invoice < ApplicationRecord
     joins(:invoice_items).where("invoice_items.status != ?", 2).distinct.order(:created_at)
   end
 
+  def total_discount
+    invoice_items.joins(:bulk_discounts)
+                  .select("invoice_items.id, max(invoice_items.unit_price * invoice_items.quantity * (bulk_discounts.percentage_discount / 100.0)) as total_discount")
+                  .where("invoice_items.quantity >= bulk_discounts.threshold")
+                  .group("invoice_items.id")
+                  .order(total_discount: :desc)
+                  .sum(&:total_discount)
+  end
 end

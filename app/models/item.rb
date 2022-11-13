@@ -3,7 +3,8 @@ class Item < ApplicationRecord
   has_many :invoice_items
   has_many :invoices, through: :invoice_items
   has_many :transactions, through: :invoices
-
+  has_many :bulk_discounts, through: :merchant
+  
   validates :name, :description, :status, :presence => true
   validates :unit_price, presence: :true, numericality: :true
 

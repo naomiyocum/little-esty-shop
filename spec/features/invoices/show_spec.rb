@@ -23,7 +23,7 @@ RSpec.describe 'Invoice Show Page', type: :feature do
   let!(:invoice_12) {zoro.invoices.create!(status: 2)}
 
   let!(:invoice_item_1)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_1.id, quantity: 2, unit_price: 2999, status: "pending")}
-  let!(:invoice_item_2)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_3.id, quantity: 1, unit_price: 2999, status: "shipped")}
+  let!(:invoice_item_2)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_3.id, quantity: 10, unit_price: 300, status: "shipped")}
   let!(:invoice_item_3)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_5.id, quantity: 2, unit_price: 2999, status: "shipped")}
   let!(:invoice_item_4)  {InvoiceItem.create!(item_id: stickers.id, invoice_id: invoice_7.id, quantity: 5, unit_price: 100, status: "shipped")}
   let!(:invoice_item_5)  {InvoiceItem.create!(item_id: stickers.id, invoice_id: invoice_9.id, quantity: 1, unit_price: 100, status: "shipped")}
@@ -41,6 +41,7 @@ RSpec.describe 'Invoice Show Page', type: :feature do
   let!(:shirt) {tyty.items.create!(name: "Funny Shirt", description: "nice", unit_price: 1099)}
   let!(:pants) {tyty.items.create!(name: "Pants", description: "nice", unit_price: 2010)}
 
+  let!(:discount_10off) {BulkDiscount.create!(name: "10 off for 10 items", threshold: 10, percentage_discount: 10, merchant_id: nomi.id)}
   describe 'invoice#show' do
     it 'shows invoice id, status, and created at' do
       visit  merchant_invoice_path(nomi, invoice_1)
@@ -89,6 +90,14 @@ RSpec.describe 'Invoice Show Page', type: :feature do
 
       expect(current_path).to eq(merchant_invoice_path(nomi, invoice_1))
       expect(invoice_item_1.reload.status).to eq('packaged')
+    end
+
+    it 'shows the total revenue discounted' do
+      visit merchant_invoice_path(nomi, invoice_3)
+
+      within("#info") do
+        expect(page).to have_content("Total Discounted Revenue: $27.00")
+      end
     end
   end
 end

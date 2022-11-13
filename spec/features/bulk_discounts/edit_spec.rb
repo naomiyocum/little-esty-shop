@@ -1,5 +1,6 @@
 require 'rails_helper'
-RSpec.describe 'merchant bulk discounts index page' do
+
+RSpec.describe 'bulk discounts edit page' do
   let!(:nomi) {Merchant.create!(name: "Naomi LLC")}
   let!(:tyty) {Merchant.create!(name: "TyTy's Grub")}
   
@@ -58,44 +59,60 @@ RSpec.describe 'merchant bulk discounts index page' do
   
   let!(:discount_20p_10i) {BulkDiscount.create!(name: "20 off for 10", threshold: 10, percentage_discount: 20, merchant_id: nomi.id)}
   let!(:discount_30p_15i) {BulkDiscount.create!(name: "30 off for 15", threshold: 15, percentage_discount: 30, merchant_id: nomi.id)}
-  let!(:discount_31p_15i) {BulkDiscount.create!(name: "31 off for 15", threshold: 15, percentage_discount: 30, merchant_id: tyty.id)}
 
-  describe 'As a merchant' do
-    describe 'When I visit my merchant dashboard' do
-      it 'shows a link to merchant discount index page' do
-        visit merchant_dashboard_index_path(nomi)
+  describe "When I visit my bulk discount show page" do
+    it 'has a link to edit a bulk discount' do
+      visit merchant_bulk_discount_path(nomi, discount_20p_10i)
 
-        expect(page).to have_link("My Discounts")
-      end
+      expect(page).to have_link("Edit This Discount") 
+    end
 
-      it 'when I click on my discount link I go to bulk discount index page' do
-        visit merchant_dashboard_index_path(nomi)
-        
-        click_on("My Discounts")
-        
-        expect(page).to have_current_path(merchant_bulk_discounts_path(nomi))
-      end
+    it 'when I click the link I go to merchant bulk discount edit page' do
+      visit merchant_bulk_discount_path(nomi, discount_20p_10i)
 
-      it 'each discount has a link' do
-        visit merchant_bulk_discounts_path(nomi, discount_20p_10i)
+      click_on("Edit This Discount")
+      expect(page).to have_current_path(edit_merchant_bulk_discount_path(nomi, discount_20p_10i))
+    end
 
-        expect(page).to have_link("#{discount_20p_10i.name}")
-      end
+    it "shows a form with existing bulk discount attributes" do
+      visit edit_merchant_bulk_discount_path(nomi, discount_20p_10i)
 
-      it 'when I click the discount link I go to its show page' do
-        visit merchant_bulk_discounts_path(nomi, discount_20p_10i)
+      expect(page).to have_field("Name", with: discount_20p_10i.name)
+      expect(page).to have_field("Threshold", with: discount_20p_10i.threshold)
+      expect(page).to have_field("Percentage discount", with: discount_20p_10i.percentage_discount)
+    end
 
-        click_on(discount_20p_10i.name)
+    it "when I fill out the edit bulk discount form to takes me to bulk discounts show page" do
+      visit edit_merchant_bulk_discount_path(nomi, discount_20p_10i)
 
-        expect(page).to have_current_path(merchant_bulk_discount_path(nomi, discount_20p_10i))
-      end
+      fill_in "Name", with: "Christmas Sale!"
+      click_button("Update Bulk Discount")
+      expect(page).to have_current_path(merchant_bulk_discount_path(nomi, discount_20p_10i))
+    end
 
-      it 'next to each bulk discount I see a link to delete it' do
-        visit merchant_bulk_discounts_path(nomi)
+    it "changes persist after editing a bulk discount" do
+      visit edit_merchant_bulk_discount_path(nomi, discount_20p_10i)
 
-        expect(page).to have_button("Delete #{discount_20p_10i.name}")
-        expect(page).to_not have_button("Delete #{discount_31p_15i.name}")
-      end
+      fill_in "Name", with: "Christmas Sale!"
+      
+      click_button("Update Bulk Discount")
+
+      expect(page).to have_content("Christmas Sale!")
+      expect(page).to have_content("Threshold: 10")
+      expect(page).to have_content("Percentage discount: 20")
+      expect(page).to_not have_content("20 off for 10")
+    end
+
+    it "flashes a message if field input is invalid" do
+      visit edit_merchant_bulk_discount_path(nomi, discount_20p_10i)
+
+      fill_in "Name", with: ""
+      fill_in "Percentage discount", with: "forty"
+      
+      click_button("Update Bulk Discount")
+      
+      expect(page).to have_content("Name can't be blank")
+      expect(page).to have_content("Percentage discount is not a number")
     end
   end
 end

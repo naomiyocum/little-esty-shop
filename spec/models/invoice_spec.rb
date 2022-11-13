@@ -17,7 +17,7 @@ RSpec.describe Invoice, type: :model do
   let!(:invoice_6) {sanji.invoices.create!(status: 2)}
 
   let!(:invoice_item_1)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_1.id, quantity: 2, unit_price: 2999, status: "shipped")}
-  let!(:invoice_item_2)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_3.id, quantity: 1, unit_price: 2999, status: "packaged")}
+  let!(:invoice_item_2)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_3.id, quantity: 10, unit_price: 300, status: "packaged")}
   let!(:invoice_item_3)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_5.id, quantity: 2, unit_price: 2999, status: "packaged")}
   let!(:invoice_item_4)  {InvoiceItem.create!(item_id: stickers.id, invoice_id: invoice_6.id, quantity: 5, unit_price: 100, status: "shipped")}
   let!(:invoice_item_5)  {InvoiceItem.create!(item_id: stickers.id, invoice_id: invoice_6.id, quantity: 1, unit_price: 100, status: "shipped")}
@@ -33,7 +33,9 @@ RSpec.describe Invoice, type: :model do
   let!(:water) {tyty.items.create!(name: "The Best Water Ever", description: "from the great Cherry Creek Reservoir", unit_price: 100)}
   let!(:shirt) {tyty.items.create!(name: "Funny Shirt", description: "nice", unit_price: 1099)}
   let!(:pants) {tyty.items.create!(name: "Pants", description: "nice", unit_price: 2010)}
-
+  
+  let!(:discount_10off) {BulkDiscount.create!(name: "10 off for 10 items", threshold: 10, percentage_discount: 10, merchant_id: nomi.id)}
+  
   describe 'relationships' do
     it {should belong_to(:customer)}
     it {should have_many(:invoice_items)}
@@ -75,6 +77,13 @@ RSpec.describe Invoice, type: :model do
     describe '#admin_total_revenue' do
       it 'returns the total revenue for a specific merchant' do
         expect(invoice_1.admin_total_revenue(invoice_1)).to eq(5998)
+      end
+    end
+
+    describe '#total_discount' do
+      it 'returns the value of the total discount on an invoice' do
+        
+        expect(invoice_3.total_discount).to eq(300)
       end
     end
   end

@@ -1,5 +1,6 @@
 require 'rails_helper'
-RSpec.describe 'merchant bulk discounts index page' do
+
+RSpec.describe 'destroying a bulk discount' do
   let!(:nomi) {Merchant.create!(name: "Naomi LLC")}
   let!(:tyty) {Merchant.create!(name: "TyTy's Grub")}
   
@@ -55,47 +56,28 @@ RSpec.describe 'merchant bulk discounts index page' do
   let!(:transaction_11) {Transaction.create!(credit_card_number: 2000000000000000, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_11.id)}
   let!(:transaction_12) {Transaction.create!(credit_card_number: 2000000000000000, credit_card_expiration_date: "01/21", result: "failed", invoice_id: invoice_12.id)}
   let!(:transaction_13) {Transaction.create!(credit_card_number: 3333333333333333, credit_card_expiration_date: "01/21", result: "success", invoice_id: invoice_13.id)}
-  
   let!(:discount_20p_10i) {BulkDiscount.create!(name: "20 off for 10", threshold: 10, percentage_discount: 20, merchant_id: nomi.id)}
   let!(:discount_30p_15i) {BulkDiscount.create!(name: "30 off for 15", threshold: 15, percentage_discount: 30, merchant_id: nomi.id)}
-  let!(:discount_31p_15i) {BulkDiscount.create!(name: "31 off for 15", threshold: 15, percentage_discount: 30, merchant_id: tyty.id)}
 
-  describe 'As a merchant' do
-    describe 'When I visit my merchant dashboard' do
-      it 'shows a link to merchant discount index page' do
-        visit merchant_dashboard_index_path(nomi)
+  describe 'When I click the delete button' do
+    it 'redirects me back to bulk discounts index page' do
+      visit merchant_bulk_discounts_path(nomi)
 
-        expect(page).to have_link("My Discounts")
-      end
+      click_on("Delete #{discount_20p_10i.name}")
 
-      it 'when I click on my discount link I go to bulk discount index page' do
-        visit merchant_dashboard_index_path(nomi)
-        
-        click_on("My Discounts")
-        
-        expect(page).to have_current_path(merchant_bulk_discounts_path(nomi))
-      end
+      expect(page).to have_current_path(merchant_bulk_discounts_path(nomi))
+    end
 
-      it 'each discount has a link' do
-        visit merchant_bulk_discounts_path(nomi, discount_20p_10i)
+    it 'I no longer see the discount I deleted listed' do
+      visit merchant_bulk_discounts_path(nomi)
 
-        expect(page).to have_link("#{discount_20p_10i.name}")
-      end
+      click_on("Delete #{discount_20p_10i.name}")
 
-      it 'when I click the discount link I go to its show page' do
-        visit merchant_bulk_discounts_path(nomi, discount_20p_10i)
-
-        click_on(discount_20p_10i.name)
-
-        expect(page).to have_current_path(merchant_bulk_discount_path(nomi, discount_20p_10i))
-      end
-
-      it 'next to each bulk discount I see a link to delete it' do
-        visit merchant_bulk_discounts_path(nomi)
-
-        expect(page).to have_button("Delete #{discount_20p_10i.name}")
-        expect(page).to_not have_button("Delete #{discount_31p_15i.name}")
-      end
+      expect(page).to_not have_content("#{discount_20p_10i.name}")
     end
   end
 end
+
+# When I click this link
+# Then I am redirected back to the bulk discounts index page
+# And I no longer see the discount listed
