@@ -23,6 +23,8 @@ RSpec.describe Invoice, type: :model do
   let!(:invoice_item_2) {create(:invoice_item, invoice: invoice_1, item: item_2, quantity: 5, unit_price: 20, status: 0)}
   let!(:invoice_item_3) {create(:invoice_item, invoice: invoice_1, item: item_3, quantity: 1, unit_price: 35, status: 0)}
   let!(:invoice_item_4) {create(:invoice_item, invoice: invoice_1, item: item_4, quantity: 12, unit_price: 50, status: 0)}
+  let!(:invoice_item_5) {create(:invoice_item, invoice: invoice_2, item: item_4, quantity: 1, unit_price: 50, status: 0)}
+  let!(:invoice_item_6) {create(:invoice_item, invoice: invoice_2, item: item_3, quantity: 4, unit_price: 50, status: 0)}
 
   let!(:item_1) {create(:item, merchant: merch_1)}
   let!(:item_2) {create(:item, merchant: merch_1)}
@@ -70,6 +72,7 @@ RSpec.describe Invoice, type: :model do
     describe '#qualified_invoice_items' do
       it 'returns the invoice_items that qualify for a discount' do
         expect(invoice_1.qualified_invoice_items).to eq([invoice_item_1, invoice_item_2, invoice_item_4])
+        expect(invoice_2.qualified_invoice_items).to eq([])
       end
     end
 
