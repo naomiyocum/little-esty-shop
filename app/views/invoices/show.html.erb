@@ -55,8 +55,8 @@
           <% end %>
         </td>
         <td>
-          <% if invoice_item.available_discount != nil %>
-            <p>#<%= link_to invoice_item.available_discount.id, merchant_bulk_discount_path(@merchant, invoice_item.available_discount) %></p>
+          <% if invoice_item.best_discount != nil %>
+            <p>#<%= link_to invoice_item.best_discount.id, merchant_bulk_discount_path(@merchant, invoice_item.best_discount) %></p>
           <% end %>
         </td>
       </tr>
