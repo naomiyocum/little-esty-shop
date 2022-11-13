@@ -53,7 +53,7 @@ RSpec.describe InvoiceItem, type: :model do
       end
     end
 
-    describe '#my_rev' do
+    describe '#my_revenue' do
       it 'returns the revenue for a specific invoice_item' do
         expect(invoice_item_1.my_revenue).to eq(1000)
         expect(invoice_item_2.my_revenue).to eq(100)
