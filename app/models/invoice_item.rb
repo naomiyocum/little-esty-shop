@@ -10,4 +10,9 @@ class InvoiceItem < ApplicationRecord
   def self.uniq_invoice_items
     distinct
   end
+
+  def applied_discount
+    self.bulk_discounts.where("threshold <=  ?", quantity)
+                        .order(bulk_discounts: :desc).first
+  end
 end

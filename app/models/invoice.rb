@@ -13,7 +13,6 @@ class Invoice < ApplicationRecord
   end
 
   def my_total_revenue(merchant)
-    # require 'pry'; binding.pry
     invoice_items.joins(:item)
                   .where(invoice_items: {invoice_id: self.id})
                   .where(items: {merchant_id: merchant.id})

@@ -22,7 +22,7 @@ RSpec.describe 'Invoice Show Page', type: :feature do
   let!(:invoice_11) {zoro.invoices.create!(status: 2)}
   let!(:invoice_12) {zoro.invoices.create!(status: 2)}
 
-  let!(:invoice_item_1)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_1.id, quantity: 2, unit_price: 2999, status: "pending")}
+  let!(:invoice_item_1)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_1.id, quantity: 10, unit_price: 300, status: "pending")}
   let!(:invoice_item_2)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_3.id, quantity: 10, unit_price: 300, status: "shipped")}
   let!(:invoice_item_3)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_5.id, quantity: 2, unit_price: 2999, status: "shipped")}
   let!(:invoice_item_4)  {InvoiceItem.create!(item_id: stickers.id, invoice_id: invoice_7.id, quantity: 5, unit_price: 100, status: "shipped")}
@@ -42,6 +42,8 @@ RSpec.describe 'Invoice Show Page', type: :feature do
   let!(:pants) {tyty.items.create!(name: "Pants", description: "nice", unit_price: 2010)}
 
   let!(:discount_10off) {BulkDiscount.create!(name: "10 off for 10 items", threshold: 10, percentage_discount: 10, merchant_id: nomi.id)}
+  let!(:discount_20off)  {BulkDiscount.create!(name: "20 off for 10 items", threshold: 10, percentage_discount: 20, merchant_id: nomi.id)}
+  let!(:discount_30off)  {BulkDiscount.create!(name: "30 off for 11 items", threshold: 11, percentage_discount: 30, merchant_id: nomi.id)}
   describe 'invoice#show' do
     it 'shows invoice id, status, and created at' do
       visit  merchant_invoice_path(nomi, invoice_1)
@@ -96,7 +98,24 @@ RSpec.describe 'Invoice Show Page', type: :feature do
       visit merchant_invoice_path(nomi, invoice_3)
 
       within("#info") do
-        expect(page).to have_content("Total Discounted Revenue: $27.00")
+        expect(page).to have_content("Total Discounted Revenue: $2400.00")
+      end
+    end
+
+    it 'shows the discount next to an invoice item' do
+      visit merchant_invoice_path(nomi, invoice_3)
+
+      within("#items_on_this_invoice") do
+        expect(page).to have_link("#{invoice_item_2.applied_discount.name}")
+      end
+    end
+
+    it 'each discount link will take you to its individual show page' do
+      visit merchant_invoice_path(nomi, invoice_3)
+      within("#items_on_this_invoice") do
+        click_on "#{invoice_item_2.applied_discount.name}"
+
+        expect(page).to have_current_path(merchant_bulk_discount_path(nomi, discount_20off))
       end
     end
   end

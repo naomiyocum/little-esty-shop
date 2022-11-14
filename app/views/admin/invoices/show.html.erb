@@ -4,7 +4,7 @@
 <div id="info">
   <b>Invoice Status: </b><%= @invoice.status %><br><br>
   <b>Created on: </b><%= @invoice.created_at.strftime("%A, %B %d, %Y") %><br><br>
-  <b>Total Revenue: </b>$<%= @invoice.admin_total_revenue(@invoice) %><br><br>
+  <b>Total Revenue: </b>$<%= "%.2f" % (@invoice.admin_total_revenue(@invoice) / 100) %><br><br>
   <b>Total Discounted Revenue: $<%= "%.2f" % (((@invoice.admin_total_revenue(@invoice)) - (@invoice.total_discount)) / 100) %><br><br>
   <b>Customer: </b><%= @invoice.customer.first_name%> <%= @invoice.customer.last_name%><br>
 </div><br>

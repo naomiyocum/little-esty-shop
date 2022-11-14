@@ -26,7 +26,7 @@ td {
 <div id="info">
   <p>Status: <%= @invoice.status %></p><br>
   <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p><br>
-  <p>Total Revenue: $<%= @invoice.my_total_revenue_formatter(@merchant) %></p><br>
+  <p>Total Revenue: $<%= "%.2f" % (@invoice.my_total_revenue(@merchant)/100) %></p><br>
   <p>Total Discounted Revenue: $<%=  "%.2f" % (((@invoice.my_total_revenue(@merchant)) - (@invoice.total_discount)) / 100) %></p><br>
   <p>Customer:</p>
   <p style="text-indent:30px;"><%= @invoice.customer.first_name%> <%= @invoice.customer.last_name%></p>
@@ -52,11 +52,14 @@ td {
           <%= form_with url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}?item_id=#{invoice_item.item.id}", method: :patch, local: true do |f| %>
           <%= f.select :status, ["pending", "packaged", "shipped"], :selected => invoice_item.status %>
           <%= f.submit 'Update Item Status', id: 'submit-button' %>
-          <% end %>
+          <% end %></td>
          
-        </td>
-      </tr>
+        <% if invoice_item.item.bulk_discounts.present? %>
+        
+        <td><%= link_to "#{invoice_item.applied_discount.name}",  "/merchants/#{@merchant.id}/bulk_discounts/#{invoice_item.applied_discount.id}" %>  </td>
+        <% end %>
       <% end %>
+      </tr>
     </table>
   </div>
 </section>
