@@ -45,7 +45,7 @@ require 'rails_helper'
   describe 'admin_invoice#show' do
     it 'shows invoice id, status, revenue, and created at' do
       visit  admin_invoice_path(invoice_1)
-     
+     save_and_open_page
       expect(page).to have_content(invoice_1.id)
 
       within ("#info") do
