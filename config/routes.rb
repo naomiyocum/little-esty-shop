@@ -12,8 +12,8 @@ Rails.application.routes.draw do
   post '/merchants/:merchant_id/bulk_discounts', to: 'bulk_discounts#create'
   delete '/merchants/:merchant_id/bulk_discounts/:id', to: 'bulk_discounts#destroy'
   patch '/merchants/:merchant_id/bulk_discounts/:id', to: 'bulk_discounts#update'
+  
   resources :admin, only: [:index]
-
   namespace :admin, except: [:destroy, :update] do
     resources :merchants, :invoices, except: [:destroy, :update]
   end

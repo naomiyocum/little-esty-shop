@@ -23,7 +23,7 @@ require 'rails_helper'
   let!(:invoice_11) {zoro.invoices.create!(status: 2)}
   let!(:invoice_12) {zoro.invoices.create!(status: 2)}
 
-  let!(:invoice_item_1)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_1.id, quantity: 2, unit_price: 2999, status: "pending")}
+  let!(:invoice_item_1)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_1.id, quantity: 10, unit_price: 300, status: "pending")}
   let!(:invoice_item_2)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_3.id, quantity: 1, unit_price: 2999, status: "shipped")}
   let!(:invoice_item_3)  {InvoiceItem.create!(item_id: lamp.id, invoice_id: invoice_5.id, quantity: 2, unit_price: 2999, status: "shipped")}
   let!(:invoice_item_4)  {InvoiceItem.create!(item_id: stickers.id, invoice_id: invoice_7.id, quantity: 5, unit_price: 100, status: "shipped")}
@@ -35,23 +35,27 @@ require 'rails_helper'
   
 
   let!(:stickers) {nomi.items.create!(name: "Anime Stickers", description: "Random One Piece and Death Note stickers", unit_price: 599)}
-  let!(:lamp) {nomi.items.create!(name: "Lava Lamp", description: "Special blue/purple wax inside a glass vessel", unit_price: 2000)}
+  let!(:lamp) {nomi.items.create!(name: "Lava Lamp", description: "Special blue/purple wax inside a glass vessel", unit_price: 300)}
   let!(:orion) {nomi.items.create!(name: "Orion Flag", description: "A flag of Okinawa's most popular beer", unit_price: 850)}
   let!(:oil) {tyty.items.create!(name: "Special Chili Oil", description: "Random One Piece and Death Note stickers", unit_price: 800)}
   let!(:water) {tyty.items.create!(name: "The Best Water Ever", description: "from the great Cherry Creek Reservoir", unit_price: 100)}
   let!(:shirt) {tyty.items.create!(name: "Funny Shirt", description: "nice", unit_price: 1099)}
   let!(:pants) {tyty.items.create!(name: "Pants", description: "nice", unit_price: 2010)}
-
+  
+  let!(:discount_10off) {BulkDiscount.create!(name: "10 off for 10 items", threshold: 10, percentage_discount: 10, merchant_id: nomi.id)}
+  
   describe 'admin_invoice#show' do
     it 'shows invoice id, status, revenue, and created at' do
       visit  admin_invoice_path(invoice_1)
-     save_and_open_page
+   
       expect(page).to have_content(invoice_1.id)
 
       within ("#info") do
         expect(page).to have_content("Status: #{invoice_1.status}")
         expect(page).to have_content("Created on: Thursday, November 03, 2022")
-        expect(page).to have_content("Total Revenue: $#{invoice_1.admin_total_revenue(invoice_1)}")
+        expect(page).to have_content("Total Revenue: $30.00")
+        expect(page).to have_content("Total Discounted Revenue: $27.00")
+
         expect(page).to have_content("#{luffy.first_name} #{luffy.last_name}")
       end
     end

@@ -20,7 +20,11 @@ class Invoice < ApplicationRecord
   end
 
   def my_total_revenue_formatter(merchant)
-    "%.2f" % my_total_revenue(merchant)
+    "%.2f" % (my_total_revenue(merchant).to_f / 100).round(2)
+  end
+
+  def admin_revenue_formatter(invoice_name)
+    "%.2f" % (admin_total_revenue(invoice_name).to_f / 100).round(2)
   end
 
   def admin_total_revenue(invoice_name)
@@ -41,5 +45,9 @@ class Invoice < ApplicationRecord
                   .group("invoice_items.id")
                   .order(total_discount: :desc)
                   .sum(&:total_discount)
+  end
+
+  def discount_format
+    ((self.total_discount.to_f / 100).round(2))
   end
 end

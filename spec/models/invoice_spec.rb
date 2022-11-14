@@ -70,7 +70,7 @@ RSpec.describe Invoice, type: :model do
 
     describe '#my_total_revenue_formatter' do
       it 'formats the total revenue to have two decimal places' do
-        expect(invoice_1.my_total_revenue_formatter(nomi)).to eq("5998.00")
+        expect(invoice_1.my_total_revenue_formatter(nomi)).to eq("59.98")
       end
     end
 
@@ -80,10 +80,113 @@ RSpec.describe Invoice, type: :model do
       end
     end
 
+    describe '#admin_revenue_formatter' do
+      it 'formats the revenue' do
+        expect(invoice_1.admin_revenue_formatter(invoice_1)).to eq("59.98")
+      end
+    end
+
     describe '#total_discount' do
       it 'returns the value of the total discount on an invoice' do
-        
+
         expect(invoice_3.total_discount).to eq(300)
+      end
+
+      it 'returns the valude of the total discount with only one discount' do
+        @merchant_test = Merchant.create!(name: "test")
+        @customer_test = Customer.create!(first_name: "test", last_name: "yes")
+        @item_test = Item.create!(name: "fiction", description: "for test", merchant_id: @merchant_test.id, unit_price: 100, status: 1)
+        @invoice_test = Invoice.create!(status: 1, customer_id: @customer_test.id)
+        @invoice_item_test = InvoiceItem.create!(invoice_id: @invoice_test.id, item_id: @item_test.id, quantity: 10, unit_price: 100, status: 1)
+        @discount_test = BulkDiscount.create!(name: "10 off for 10 items", threshold: 10, percentage_discount: 10, merchant_id: @merchant_test.id)
+        
+        expect(@invoice_test.total_discount).to eq(100)
+      end
+
+      it 'has two items both count of 5 should have no discount applied' do
+        @merchant_test = Merchant.create!(name: "test")
+        
+        @customer_test = Customer.create!(first_name: "test", last_name: "yes")
+        
+        @item_test = Item.create!(name: "fiction", description: "for test", merchant_id: @merchant_test.id, unit_price: 100, status: 1)
+        @item_test2 = Item.create!(name: "fiction", description: "for test", merchant_id: @merchant_test.id, unit_price: 100, status: 1)
+        
+        @invoice_test = Invoice.create!(status: 1, customer_id: @customer_test.id)
+        
+        @invoice_item_test = InvoiceItem.create!(invoice_id: @invoice_test.id, item_id: @item_test.id, quantity: 5, unit_price: 100, status: 1)
+        @invoice_item_test2 = InvoiceItem.create!(invoice_id: @invoice_test.id, item_id: @item_test2.id, quantity: 5, unit_price: 100, status: 1)
+        
+        @discount_test = BulkDiscount.create!(name: "10 off for 10 items", threshold: 10, percentage_discount: 10, merchant_id: @merchant_test.id)
+        
+        expect(@invoice_test.total_discount).to eq(0)
+      end
+
+      it 'returns the valude of the total discount of the highest applicable discount' do
+        @merchant_test = Merchant.create!(name: "test")        
+        @customer_test = Customer.create!(first_name: "test", last_name: "yes")        
+        @item_test = Item.create!(name: "fiction", description: "for test", merchant_id: @merchant_test.id, unit_price: 100, status: 1)        
+        @invoice_test = Invoice.create!(status: 1, customer_id: @customer_test.id)        
+        @invoice_item_test = InvoiceItem.create!(invoice_id: @invoice_test.id, item_id: @item_test.id, quantity: 10, unit_price: 100, status: 1)
+        @discount_test = BulkDiscount.create!(name: "10 off for 10 items", threshold: 10, percentage_discount: 10, merchant_id: @merchant_test.id)
+        @discount_test_2 = BulkDiscount.create!(name: "20 off for 10 items", threshold: 10, percentage_discount: 20, merchant_id: @merchant_test.id)
+        
+        expect(@invoice_test.total_discount).to eq(200)
+      end
+
+      it 'returns the valude of the total discount when no discounts apply' do
+        @merchant_test = Merchant.create!(name: "test")
+        @customer_test = Customer.create!(first_name: "test", last_name: "yes")
+        @item_test = Item.create!(name: "fiction", description: "for test", merchant_id: @merchant_test.id, unit_price: 100, status: 1)
+        @invoice_test = Invoice.create!(status: 1, customer_id: @customer_test.id)
+        @invoice_item_test = InvoiceItem.create!(invoice_id: @invoice_test.id, item_id: @item_test.id, quantity: 9, unit_price: 100, status: 1)
+        @discount_test = BulkDiscount.create!(name: "10 off for 10 items", threshold: 10, percentage_discount: 10, merchant_id: @merchant_test.id)
+        @discount_test_2 = BulkDiscount.create!(name: "20 off for 10 items", threshold: 10, percentage_discount: 20, merchant_id: @merchant_test.id)
+        
+        expect(@invoice_test.total_discount).to eq(0)
+      end
+
+      it 'returns the discount of 10 percent off for one merchants items but not the others' do
+        @merchant_test = Merchant.create!(name: "test")
+        @merchant_test_2 = Merchant.create!(name: "test 2")
+
+        @customer_test = Customer.create!(first_name: "test", last_name: "yes")
+
+        @item_test = Item.create!(name: "fiction", description: "for test", merchant_id: @merchant_test.id, unit_price: 100, status: 1)
+        @item_test_2 = Item.create!(name: "stuff", description: "for test", merchant_id: @merchant_test_2.id, unit_price: 100, status: 1)
+        
+        @invoice_test = Invoice.create!(status: 1, customer_id: @customer_test.id)
+        
+        @invoice_item_test = InvoiceItem.create!(invoice_id: @invoice_test.id, item_id: @item_test.id, quantity: 10, unit_price: 100, status: 1)
+        @invoice_item_test_2 = InvoiceItem.create!(invoice_id: @invoice_test.id, item_id: @item_test_2.id, quantity: 10, unit_price: 100, status: 1)
+        
+        @discount_test = BulkDiscount.create!(name: "10 off for 10 items", threshold: 10, percentage_discount: 10, merchant_id: @merchant_test.id)
+        
+        expect(@invoice_test.total_discount).to eq(100)
+      end
+
+      it 'returns two discounts from the same merchant that are both applicable' do
+        @merchant_test = Merchant.create!(name: "test")
+
+        @customer_test = Customer.create!(first_name: "test", last_name: "yes")
+
+        @item_test = Item.create!(name: "fiction", description: "for test", merchant_id: @merchant_test.id, unit_price: 100, status: 1)
+        @item_test_2 = Item.create!(name: "stuff", description: "for test", merchant_id: @merchant_test.id, unit_price: 100, status: 1)
+        
+        @invoice_test = Invoice.create!(status: 1, customer_id: @customer_test.id)
+        
+        @invoice_item_test = InvoiceItem.create!(invoice_id: @invoice_test.id, item_id: @item_test.id, quantity: 12, unit_price: 100, status: 1)
+        @invoice_item_test_2 = InvoiceItem.create!(invoice_id: @invoice_test.id, item_id: @item_test_2.id, quantity: 15, unit_price: 100, status: 1)
+        
+        @discount_test = BulkDiscount.create!(name: "30 off for 15 items", threshold: 15, percentage_discount: 30, merchant_id: @merchant_test.id)
+        @discount_test2 = BulkDiscount.create!(name: "20 off for 10 items", threshold: 10, percentage_discount: 20, merchant_id: @merchant_test.id)
+        
+        expect(@invoice_test.total_discount).to eq(690)
+      end
+    end
+
+    describe '#discount_format' do
+      it 'should format the disount into dollars' do
+        expect(invoice_3.discount_format).to eq(3.00)
       end
     end
   end
