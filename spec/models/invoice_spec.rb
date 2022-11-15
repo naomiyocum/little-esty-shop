@@ -121,7 +121,7 @@ RSpec.describe Invoice, type: :model do
         expect(@invoice_test.total_discount).to eq(0)
       end
 
-      it 'returns the valude of the total discount of the highest applicable discount' do
+      it 'returns the value of the total discount of the highest applicable discount' do
         @merchant_test = Merchant.create!(name: "test")        
         @customer_test = Customer.create!(first_name: "test", last_name: "yes")        
         @item_test = Item.create!(name: "fiction", description: "for test", merchant_id: @merchant_test.id, unit_price: 100, status: 1)        

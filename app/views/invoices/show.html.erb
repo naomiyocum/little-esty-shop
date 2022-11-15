@@ -52,12 +52,11 @@ td {
           <%= form_with url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}?item_id=#{invoice_item.item.id}", method: :patch, local: true do |f| %>
           <%= f.select :status, ["pending", "packaged", "shipped"], :selected => invoice_item.status %>
           <%= f.submit 'Update Item Status', id: 'submit-button' %>
-          <% end %></td>
-         
-        <% if invoice_item.item.bulk_discounts.present? %>
+          <% end %>
+        </td> 
+            
+        <td><%= link_to_unless(invoice_item.item.bulk_discounts == nil, "#{invoice_item.applied_discount.name}", "/merchants/#{@merchant.id}/bulk_discounts/#{invoice_item.applied_discount.id}") %></td>
         
-        <td><%= link_to "#{invoice_item.applied_discount.name}",  "/merchants/#{@merchant.id}/bulk_discounts/#{invoice_item.applied_discount.id}" %>  </td>
-        <% end %>
       <% end %>
       </tr>
     </table>

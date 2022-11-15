@@ -53,7 +53,7 @@ RSpec.describe 'Invoice Show Page', type: :feature do
       within ("#info") do
         expect(page).to have_content("Status: #{invoice_1.status}")
         expect(page).to have_content("Created on: Thursday, November 03, 2022")
-        expect(page).to have_content("Total Revenue: $#{invoice_1.my_total_revenue(nomi)}")
+        expect(page).to have_content("Total Revenue: $30.00")
         expect(page).to have_content("#{luffy.first_name} #{luffy.last_name}")
       end
     end
@@ -98,7 +98,7 @@ RSpec.describe 'Invoice Show Page', type: :feature do
       visit merchant_invoice_path(nomi, invoice_3)
 
       within("#info") do
-        expect(page).to have_content("Total Discounted Revenue: $2400.00")
+        expect(page).to have_content("Total Discounted Revenue: $24.00")
       end
     end
 
@@ -106,7 +106,7 @@ RSpec.describe 'Invoice Show Page', type: :feature do
       visit merchant_invoice_path(nomi, invoice_3)
 
       within("#items_on_this_invoice") do
-        expect(page).to have_link("#{invoice_item_2.applied_discount.name}")
+        expect(page).to have_link(discount_20off.name)
       end
     end
 
