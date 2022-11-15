@@ -55,8 +55,9 @@ td {
           <% end %>
         </td> 
             
-        <td><%= link_to_unless(invoice_item.item.bulk_discounts == nil, "#{invoice_item.applied_discount.name}", "/merchants/#{@merchant.id}/bulk_discounts/#{invoice_item.applied_discount.id}") %></td>
-        
+        <td><%if invoice_item.item.bulk_discounts.first.present?%>
+              <%= link_to "#{invoice_item.applied_discount.name}", "/merchants/#{@merchant.id}/bulk_discounts/#{invoice_item.applied_discount.id}" %></td>
+            <% end %>
       <% end %>
       </tr>
     </table>

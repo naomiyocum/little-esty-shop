@@ -113,10 +113,17 @@ RSpec.describe 'Invoice Show Page', type: :feature do
     it 'each discount link will take you to its individual show page' do
       visit merchant_invoice_path(nomi, invoice_3)
       within("#items_on_this_invoice") do
-        click_on "#{invoice_item_2.applied_discount.name}"
-
+        click_on "#{discount_20off.name}"
+        
         expect(page).to have_current_path(merchant_bulk_discount_path(nomi, discount_20off))
       end
+    end
+    it 'should not have a link' do
+      visit merchant_invoice_path(nomi, invoice_9)
+      within("#items_on_this_invoice") do
+        expect(page).to_not have_content(discount_20off.name)
+      end
+
     end
   end
 end
