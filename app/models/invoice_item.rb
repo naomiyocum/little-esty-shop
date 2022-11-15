@@ -11,7 +11,7 @@ class InvoiceItem < ApplicationRecord
     distinct
   end
 
-  def discount_dollars
+  def discount_amount
     (my_revenue * discount_calc).to_i
   end
 

@@ -67,10 +67,10 @@ RSpec.describe InvoiceItem, type: :model do
       end
     end
 
-    describe '#discount_dollars' do
+    describe '#discount_amount' do
       it 'returns the new price after discount' do
-        expect(invoice_item_1.discount_dollars).to eq(100)
-        expect(invoice_item_2.discount_dollars).to eq(5)
+        expect(invoice_item_1.discount_amount).to eq(100)
+        expect(invoice_item_2.discount_amount).to eq(5)
       end
     end
   end
