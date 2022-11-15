@@ -29,7 +29,7 @@ class Invoice < ApplicationRecord
   end
 
   def all_discounts
-    qualified_invoice_items.sum {|invoice_item| invoice_item.discount_dollars}
+    qualified_invoice_items.sum(&:discount_amount)
   end
 
   def discounted_revenue

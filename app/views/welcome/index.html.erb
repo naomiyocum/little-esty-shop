@@ -1,2 +1,17 @@
-<h2>Hello World!</h2>
-<h3>Welcome to the Little Esty Shop!</h3>
+<br><br><center><h2>Hello World!</h2>
+<h3>Welcome to the Little Esty Shop</h3>
+<p style="font-size:x-small;">Admin, click 
+  <%= link_to 'here', admin_index_path %>.</p></center><br><br>
+
+<p style="font-size:large;">Welcome! To check your dashboard, 
+  please enter your ID below and we will direct you to your page!</p>
+
+
+<div style="text-indent:3em;">
+<%= form_with url: merchant_dashboard_index_path(:merchant_id), method: :get, local: true do |f| %>
+  <%= f.label :search, 'ID:' %>
+  <%= f.number_field :search %>
+  <%= f.submit 'Find Me'%>
+<% end %>
+</div>
+
