@@ -14,5 +14,15 @@ RSpec.describe 'the Welcome Page', type: :feature do
 
       expect(current_path).to eq(merchant_dashboard_index_path(merch_1))
     end
+
+    it 'gives an error message and returns back to the same page when a merchant ID does not exist' do
+      visit root_path
+      
+      fill_in :search, with: 100
+      click_on 'Find Me'
+
+      expect(current_path).to eq(root_path)
+      expect(page).to have_content('Merchant #100 Does Not Exist')
+    end
   end
 end
