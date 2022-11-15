@@ -44,20 +44,21 @@ td {
         <th>Discount</th>
       </tr>
       <% @invoice.invoice_items.uniq_invoice_items.each do |invoice_item| %>
-      <tr>
-        <td><%= invoice_item.item.name %></td>
-        <td><%= invoice_item.quantity %></td>
-        <td>$<%= invoice_item.item.current_price %></td>
-        <td id="update_status">
-          <%= form_with url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}?item_id=#{invoice_item.item.id}", method: :patch, local: true do |f| %>
-          <%= f.select :status, ["pending", "packaged", "shipped"], :selected => invoice_item.status %>
-          <%= f.submit 'Update Item Status', id: 'submit-button' %>
-          <% end %>
-        </td> 
-            
-        <td><%if invoice_item.item.bulk_discounts.first.present?%>
-              <%= link_to "#{invoice_item.applied_discount.name}", "/merchants/#{@merchant.id}/bulk_discounts/#{invoice_item.applied_discount.id}" %></td>
+        <tr>
+          <td><%= invoice_item.item.name %></td>
+          <td><%= invoice_item.quantity %></td>
+          <td>$<%= invoice_item.item.current_price %></td>
+          <td id="update_status">
+            <%= form_with url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}?item_id=#{invoice_item.item.id}", method: :patch, local: true do |f| %>
+            <%= f.select :status, ["pending", "packaged", "shipped"], :selected => invoice_item.status %>
+            <%= f.submit 'Update Item Status', id: 'submit-button' %>
             <% end %>
+          </td> 
+              
+          <td><%if invoice_item.item.bulk_discounts.present? && invoice_item.applied_discount&.present?%>
+          
+                <%= link_to "#{invoice_item.applied_discount.name}", "/merchants/#{@merchant.id}/bulk_discounts/#{invoice_item.applied_discount.id}" %></td>
+              <% end %>
       <% end %>
       </tr>
     </table>
