@@ -1,4 +1,5 @@
-# Little Esty Shop
+<h1 align="center"> Little Esty Shop 🛍️ </h1>
+
 ![GitHub Contributors](https://img.shields.io/github/contributors/naomiyocum/little-esty-shop)
 ![GitHub language count](https://img.shields.io/github/languages/count/naomiyocum/little-esty-shop)
 ![GitHub top language](https://img.shields.io/github/languages/top/naomiyocum/little-esty-shop?color=yellow)
